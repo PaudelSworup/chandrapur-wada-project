@@ -1,0 +1,214 @@
+ <View className="mt-5">
+        <View className="mb-4">
+          <TextInput
+            mode="outlined"
+            label="संस्थाको नाम"
+            //   onChangeText={handleChange('bridgeName')}
+            //   value={values.bridgeName}
+            className="h-12 px-2 bg-white"
+            placeholder="संस्थाको नाम"
+          />
+        </View>
+
+        <View style={styles.container}>
+          {renderLabel('srw')}
+          <Dropdown
+            style={[
+              styles.dropdown,
+              isFocusOneDropDown && {borderColor: '#7B66AB', borderWidth: 2},
+            ]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={dropDownData}
+            maxHeight={300}
+            labelField="label"
+            valueField="values"
+            placeholder={!isFocusOneDropDown ? 'संस्था रहेको वडा ' : '...'}
+            onFocus={() => setIsFocusOneDropDown(true)}
+            onBlur={() => setIsFocusOneDropDown(false)}
+            onChange={(item: any) => {
+              // handleChange('bridgeStatus')(item?.values);
+              setValueOneDropDown(item.value);
+              setIsFocusOneDropDown(false);
+            }}
+          />
+        </View>
+
+        <View style={styles.container}>
+          {renderLabel('srt')}
+          <Dropdown
+            style={[
+              styles.dropdown,
+              isFocusTwoDropDown && {borderColor: '#7B66AB', borderWidth: 2},
+            ]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={dropDownData}
+            maxHeight={300}
+            labelField="label"
+            valueField="values"
+            placeholder={!isFocusTwoDropDown ? 'संस्था रहेको टोल ' : '...'}
+            onFocus={() => setIsFocusTwoDropDown(true)}
+            onBlur={() => setIsFocusTwoDropDown(false)}
+            onChange={(item: any) => {
+              // handleChange('bridgeStatus')(item?.values);
+              setValueTwoDropDown(item.value);
+              setIsFocusTwoDropDown(false);
+            }}
+          />
+        </View>
+
+        {/* <TouchableOpacity
+    className="mb-1 px-2"
+    onPress={() => navigation.navigate(NavigationStrings.MAPS)}>
+    <Text className=" text-right text-blue-600 text-[16px]">
+      set your location
+    </Text>
+  </TouchableOpacity> */}
+
+        <View className="mb-4">
+          <TextInput
+            label="phone"
+            placeholder="phone"
+            //   onChangeText={handleChange('centerLongitude')}
+            //   value={longitude != 0 ? longitude.toString() : values.centerLongitude}
+            keyboardType="numeric"
+            mode="outlined"
+            className="h-12 px-2 bg-white"
+          />
+        </View>
+
+        <View className="mb-4">
+          <TextInput
+            label="email"
+            placeholder="email"
+            //   onChangeText={handleChange('centerLatitude')}
+            //   value={latitude != 0 ? latitude.toString() : values.centerLatitude}
+            keyboardType="numeric"
+            mode="outlined"
+            className="h-12 px-2 bg-white"
+          />
+        </View>
+
+        <View style={styles.container}>
+          {renderLabel('sp')}
+          <Dropdown
+            style={[
+              styles.dropdown,
+              isFocusTwoDropDown && {borderColor: '#7B66AB', borderWidth: 2},
+            ]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={dropDownData}
+            maxHeight={300}
+            labelField="label"
+            valueField="values"
+            placeholder={!isFocusTwoDropDown ? 'संस्थाको प्रकार ' : '...'}
+            onFocus={() => setIsFocusTwoDropDown(true)}
+            onBlur={() => setIsFocusTwoDropDown(false)}
+            onChange={(item: any) => {
+              // handleChange('bridgeStatus')(item?.values);
+              setValueTwoDropDown(item.value);
+              setIsFocusTwoDropDown(false);
+            }}
+          />
+        </View>
+
+        <View className="mb-4">
+          <TextInput
+            label="length"
+            placeholder="length"
+            //   onChangeText={handleChange('length')}
+            //   value={values.length}
+            keyboardType="numeric"
+            mode="outlined"
+            className="h-12 px-2 bg-white"
+          />
+        </View>
+
+        <View className="mb-4">
+          <TextInput
+            label="width"
+            placeholder="width"
+            //   onChangeText={handleChange('width')}
+            //   value={values.width}
+            keyboardType="numeric"
+            mode="outlined"
+            className="h-12 px-2 bg-white"
+          />
+        </View>
+
+        <View style={styles.container}>
+          {renderLabel('bs')}
+          <Dropdown
+            style={[
+              styles.dropdown,
+              isFocusOneDropDown && {borderColor: '#7B66AB', borderWidth: 2},
+            ]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={dropDownData}
+            maxHeight={300}
+            labelField="label"
+            valueField="values"
+            placeholder={!isFocusOneDropDown ? 'Bridge Status ' : '...'}
+            onFocus={() => setIsFocusOneDropDown(true)}
+            onBlur={() => setIsFocusOneDropDown(false)}
+            onChange={(item: any) => {
+              // handleChange('bridgeStatus')(item?.values);
+              setValueOneDropDown(item.value);
+              setIsFocusOneDropDown(false);
+            }}
+          />
+        </View>
+
+        <View style={styles.container}>
+          <Dropdown
+            style={[
+              styles.dropdown,
+              isFocusTwoDropDown && {borderColor: '#7B66AB', borderWidth: 2},
+            ]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={dropDownData}
+            maxHeight={300}
+            labelField="label"
+            valueField="values"
+            placeholder={!isFocusTwoDropDown ? 'Bridge Type ' : '...'}
+            onFocus={() => setIsFocusTwoDropDown(true)}
+            onBlur={() => setIsFocusTwoDropDown(false)}
+            onChange={(item: any) => {
+              // handleChange('bridgeType')(item?.values);
+              setValueTwoDropDown(item.value);
+              setIsFocusTwoDropDown(false);
+            }}
+          />
+        </View>
+
+        <View className="mb-4">
+          <TextInput
+            placeholder="Remarks"
+            label="remarks"
+            //   onChangeText={handleChange('remarks')}
+            //   value={values.remarks}
+            // keyboardType="numeric"
+            mode="outlined"
+            className="h-12 px-2 bg-white"
+          />
+        </View>
+        <View className="mb-4 mx-5">
+          <Button className="bg-sky-800 p-1 rounded-md" onPress={() => {}}>
+            <Text className="text-lg text-white uppercase">Add</Text>
+          </Button>
+        </View>
+      </View>
