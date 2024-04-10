@@ -30,24 +30,24 @@ export const getMunWard = async () => {
   }
 };
 
-// export const houseData = async (data: any) => {
-//   try {
-//     return await fetch(`${API}/road/save`, {
-//       method: 'POST',
-//       headers: {
-//         Accept: 'application/json',
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(data),
-//     })
-//       .then(res => {
-//         return res.json();
-//       })
-//       .catch((err: any) => {
-//         return console.log(err);
-//       });
-//   } catch (err) {}
-// };
+export const addHouseData = async (data: any) => {
+  try {
+    return await fetch(`${API}/house/add`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(res => {
+        return res.json();
+      })
+      .catch((err: any) => {
+        return console.log(err);
+      });
+  } catch (err) {}
+};
 
 export const getToleByWard = async (wardId: number) => {
   try {

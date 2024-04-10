@@ -40,7 +40,6 @@ const DrawerStack = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName={NavigationStrings.GHARSAMMANDHIBIBARAN}
       backBehavior="history"
       drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
@@ -118,7 +117,7 @@ const DrawerStack = () => {
         })}
       />
 
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name={NavigationStrings.GHARBIBARAN}
         component={Gharbibaran}
         options={({navigation}) => ({
@@ -129,7 +128,7 @@ const DrawerStack = () => {
             </Text>
           ),
         })}
-      /> */}
+      />
 
       <Drawer.Screen
         name={NavigationStrings.GHARSAMMANDHIBIBARAN}
