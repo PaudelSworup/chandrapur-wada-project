@@ -3,11 +3,7 @@ import GhumnethauComponent from '../../components/Ghumnethau/GhumnethauComponent
 import {SafeAreaView} from 'react-native';
 
 const Ghumnethau = () => {
-  return (
-    <SafeAreaView>
-      <GhumnethauComponent />
-    </SafeAreaView>
-  );
+  return <GhumnethauComponent />;
 };
 
 export default Ghumnethau;

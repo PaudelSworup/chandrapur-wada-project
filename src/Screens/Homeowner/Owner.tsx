@@ -6,8 +6,8 @@ import OwnerComponent from '../../components/Homeowner/OwnerComponent';
 
 const Owner = () => {
   return (
-    <SafeAreaView>
-      <ScrollView className="bg-white h-full">
+    <SafeAreaView className="bg-[#f1eded] h-full">
+      <ScrollView>
         <View className="justify-center mx-2 pt-2">
           <OwnerComponent />
           {/* <Bridge

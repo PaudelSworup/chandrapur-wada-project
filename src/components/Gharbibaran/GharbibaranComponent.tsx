@@ -10,7 +10,7 @@ const GharbibaranComponent = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   return (
-    <SafeAreaView className="h-full bg-white">
+    <SafeAreaView className="h-full bg-[#f1eded]">
       <ScrollView>
         <View>
           <View className="flex-row m-5 justify-between">

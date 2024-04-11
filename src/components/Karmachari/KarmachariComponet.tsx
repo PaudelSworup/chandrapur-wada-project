@@ -3,7 +3,7 @@ import React from 'react';
 
 const KarmachariComponet = () => {
   return (
-    <SafeAreaView className="bg-[#f1efef] h-full">
+    <SafeAreaView className="bg-[#f1eded] h-full">
       <ScrollView>
         <View className="mx-3 p-3">
           <Text className="text-lg text-black">कर्मचरिहरु </Text>

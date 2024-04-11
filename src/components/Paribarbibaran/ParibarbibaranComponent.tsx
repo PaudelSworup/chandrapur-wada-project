@@ -56,7 +56,7 @@ const ParibarbibaranComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f1eded',
     padding: 10,
   },
   row: {

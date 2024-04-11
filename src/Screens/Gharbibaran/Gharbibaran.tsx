@@ -3,11 +3,7 @@ import GharbibaranComponent from '../../components/Gharbibaran/GharbibaranCompon
 import {SafeAreaView} from 'react-native';
 
 const Gharbibaran = () => {
-  return (
-    <SafeAreaView>
-      <GharbibaranComponent />
-    </SafeAreaView>
-  );
+  return <GharbibaranComponent />;
 };
 
 export default Gharbibaran;

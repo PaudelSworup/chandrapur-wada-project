@@ -13,7 +13,7 @@ const GharbibaranAdd = () => {
   const toast = useToast();
   return (
     <SafeAreaView>
-      <ScrollView className="bg-white h-full">
+      <ScrollView className="bg-[#f1eded] h-full">
         <View className="justify-center mx-2 pt-2">
           <Formik
             initialValues={homeInitialvalues}

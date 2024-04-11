@@ -3,7 +3,7 @@ import React from 'react';
 
 const SamparkaComponent = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView className="bg-[#f1eded] h-full">
       <View className="h-full justify-center items-center">
         <Text>सम्पर्कको विवरण उपलब्ध भएको छैन</Text>
       </View>

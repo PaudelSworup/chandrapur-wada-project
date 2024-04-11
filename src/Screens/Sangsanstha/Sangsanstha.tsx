@@ -4,8 +4,8 @@ import {SafeAreaView, ScrollView, View} from 'react-native';
 
 const Sangsanstha = () => {
   return (
-    <SafeAreaView>
-      <ScrollView className="bg-white h-full">
+    <SafeAreaView className="bg-[#f1eded] h-full">
+      <ScrollView>
         <View className="justify-center mx-2 pt-2">
           <SangsansthaComponent />
         </View>
