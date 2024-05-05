@@ -7,21 +7,22 @@ import {
   Modal,
   StyleSheet,
   Image,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {Button} from 'react-native-paper';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import NavigationStrings from '../../Constant/NavigationStrings';
-// import DefaultImage from "../"
-
-// const DEFAULT_IMAGE = Image.resolveAssetSource("/src/user.jpg").uri;
+import {useAppSelector} from '../../store/store';
+// import NetInfo from '@react-native-community/netinfo';
+// import LaunchScreen from '../../Screens/LaunchScreen';
 
 const Home = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(-100)).current;
-  const [modalVisible, setModalVisible] = useState(false);
+  const [isConnected, setIsConnected] = useState<any>(true); // Assume connected initially
+  const {name, token} = useAppSelector(state => state.users);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -48,7 +49,11 @@ const Home = () => {
     fadeInAndSlideIn();
 
     const timeout = setTimeout(() => {
-      navigation.navigate(NavigationStrings.DRAWER);
+      if (name && token) {
+        navigation.navigate(NavigationStrings.DRAWER);
+      } else {
+        navigation.navigate(NavigationStrings.LOGIN);
+      }
     }, 5000);
 
     // Clear timeout on component unmount

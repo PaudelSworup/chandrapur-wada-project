@@ -8,23 +8,34 @@ import {
 } from '../../utils/Validation/Validation';
 import {addHouseData} from '../../APIS/API/api';
 import {useToast} from 'react-native-toast-notifications';
+import {useAppSelector} from '../../store/store';
 
 const GharbibaranAdd = () => {
+  const {longitude, lattitude} = useAppSelector(
+    (state: any) => state.coordinates,
+  );
+  console.log(longitude, lattitude);
+  const {id} = useAppSelector((state: any) => state.users);
   const toast = useToast();
   return (
     <SafeAreaView>
-      <ScrollView className="bg-[#f1eded] h-full">
+      <ScrollView className="bg-[#fff] h-full">
         <View className="justify-center mx-2 pt-2">
           <Formik
-            initialValues={homeInitialvalues}
+            // initialValues={homeInitialvalues}
+            initialValues={{
+              ...homeInitialvalues,
+              longitude: longitude.toString(),
+              latitude: lattitude.toString(),
+            }}
             validationSchema={homeValidationSchema}
-            onSubmit={values => {
+            onSubmit={(values, {resetForm}) => {
               console.log(values);
               const reqData = {
                 ownerNameNp: values.houseOwnerNameNeplai,
                 citizenshipNo: values.citizenshipNum,
-                latitude: values.latitude,
-                longitude: values.longitude,
+                latitude: lattitude.toString(),
+                longitude: longitude.toString(),
                 remarks: values.remarks,
                 floor: values.floor,
                 frontLength: values.frontLength,
@@ -34,6 +45,16 @@ const GharbibaranAdd = () => {
                 houseCategory: values.houseCategoryDropDown,
                 munWard: values.wardDropDown,
                 munTole: values.toleDropDown,
+                houseOwnerGender: values.gender,
+                bathroom: values.bathroom,
+                water: values.water,
+                waterSource: values.waterSource,
+                toilet: values.toilet,
+                toiletType: values.toiletType,
+                electricity: values.electricity,
+                internet: values.internet,
+                publicVehicle: values.publicVehicle,
+                userId: id,
               };
               addHouseData(reqData).then(res => {
                 if (res.success === true) {
@@ -41,6 +62,7 @@ const GharbibaranAdd = () => {
                     type: 'success',
                     placement: 'bottom',
                   });
+                  resetForm();
                 } else {
                   toast.show(res?.error, {
                     type: 'danger',
@@ -55,6 +77,8 @@ const GharbibaranAdd = () => {
                 values={values}
                 handleChange={handleChange}
                 errors={errors}
+                longitude={longitude}
+                latitude={lattitude}
                 handleSubmit={handleSubmit}
               />
             )}

@@ -9,8 +9,10 @@ import {
   GharbibaranAdd,
   Ghumnethau,
   Karmachari,
+  Map,
   Owner,
   Paribarbibaran,
+  ParibarbibaranAdd,
   Parichaya,
   Samparka,
   Sangsanstha,
@@ -43,6 +45,15 @@ const DrawerStack = () => {
       backBehavior="history"
       drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
+        drawerType: 'slide',
+        overlayColor: 'transparent',
+        drawerActiveBackgroundColor: '#AFD1EF',
+        drawerItemStyle: {borderRadius: 10},
+        drawerLabelStyle: {fontSize: 17},
+        drawerActiveTintColor: '#111',
+        headerStyle: {
+          backgroundColor: '#F9F9F9',
+        },
         headerRight: () => (
           <Image
             source={{
@@ -143,9 +154,22 @@ const DrawerStack = () => {
         })}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name={NavigationStrings.HOMEOWNER}
         component={Owner}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerTitle: () => (
+            <Text style={styles.headerTitleText}>
+              चंद्रपुर नगरपालिका वडा नं ३
+            </Text>
+          ),
+        })}
+      /> */}
+
+      <Drawer.Screen
+        name={NavigationStrings.PARIBARBIBARAN}
+        component={Paribarbibaran}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
           headerTitle: () => (
@@ -157,8 +181,8 @@ const DrawerStack = () => {
       />
 
       <Drawer.Screen
-        name={NavigationStrings.PARIBARBIBARAN}
-        component={Paribarbibaran}
+        name={NavigationStrings.PARIBARSAMBANDHIBIBARAN}
+        component={ParibarbibaranAdd}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
           headerTitle: () => (
@@ -224,6 +248,19 @@ const DrawerStack = () => {
       <Drawer.Screen
         name={NavigationStrings.SAMPARKA}
         component={Samparka}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerTitle: () => (
+            <Text style={styles.headerTitleText}>
+              चंद्रपुर नगरपालिका वडा नं ३
+            </Text>
+          ),
+        })}
+      />
+
+      <Drawer.Screen
+        name={NavigationStrings.MAPS}
+        component={Map}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
           headerTitle: () => (

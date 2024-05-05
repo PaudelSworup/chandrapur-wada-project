@@ -13,3 +13,8 @@ export {default as Ghumnethau} from './Ghumnethau/Ghumnethau';
 export {default as Suchana} from './Suchana/Suchana';
 export {default as GharbibaranAdd} from './Gharbibaran/GharbibaranAdd';
 export {default as Samparka} from './Samparka/Samparka';
+export {default as ParibarbibaranAdd} from './Paribarbibaran/ParibarbibaranAdd';
+export {default as Login} from './auth/Login';
+export {default as Register} from './auth/Register';
+export {default as Map} from './Map/Map';
+export {default as InternetConnection} from './Internet/InternetConnection';

@@ -6,8 +6,11 @@ const WadaPratinidhiComponent = () => {
   return (
     <SafeAreaView className="bg-[#f1eded] h-full">
       <ScrollView>
-        <View className="mx-3 p-3">
-          <Text className="text-lg text-black">वडा जनप्रतिनिधिहरु</Text>
+        <View className="mx-2">
+          <View>
+            <Text className="text-2xl text-black">वडा जनप्रतिनिधिहरु</Text>
+          </View>
+
           <View className="justify-center items-center mt-5 mb-4">
             <View className=" rounded-lg " style={{elevation: 4}}>
               <Image
@@ -22,7 +25,7 @@ const WadaPratinidhiComponent = () => {
             </View>
           </View>
 
-          <View className="flex-row gap-8 flex-wrap">
+          <View className="flex-row p-3 gap-8 flex-wrap">
             <View>
               <View className=" rounded-lg " style={{elevation: 4}}>
                 <Image
