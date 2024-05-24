@@ -18,3 +18,5 @@ export {default as Login} from './auth/Login';
 export {default as Register} from './auth/Register';
 export {default as Map} from './Map/Map';
 export {default as InternetConnection} from './Internet/InternetConnection';
+export {default as GharBibaranDetail} from './Gharbibaran/GharBibaranDetail';
+export {default as ParibarBinaranDetail} from './Paribarbibaran/ParibarBibaranDetail';

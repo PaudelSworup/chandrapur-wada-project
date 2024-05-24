@@ -102,7 +102,7 @@ const FourthRegistrationView = ({
   }, [vehicelType]);
 
   const setValues = (item: any) => {
-    setFieldValue('vehicleType', item);
+    setFieldValue;
   };
 
   return (

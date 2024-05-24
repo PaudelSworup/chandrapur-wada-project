@@ -1,96 +1,115 @@
-import {View, Text, SafeAreaView, RefreshControl} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useCallback, useMemo, useState} from 'react';
-import {Button, Divider} from 'react-native-paper';
+import {ActivityIndicator, Button, Divider} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import NavigationStrings from '../../Constant/NavigationStrings';
 import {useQuery, useQueryClient} from 'react-query';
-import {getAllFamilyData} from '../../APIS/API/api';
+import {getAllFamilyAll, getAllFamilyData} from '../../APIS/API/api';
 import {FlatList} from 'react-native-gesture-handler';
 
 const ParibarbibaranComponent = () => {
   const queryClient = useQueryClient();
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [familyData, setFamilyData] = useState<any>();
+  const [loading, setLoading] = useState(false);
+  const [totalCount, setTotalCount] = useState<number>(1);
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
-  const getFamily = useQuery(['allFamily'], async () => getAllFamilyData(), {
-    onSettled: data => setFamilyData(data?.data),
-    onSuccess: () => queryClient.invalidateQueries({queryKey: ['allFamily']}),
-  });
+  const {data, isLoading} = useQuery(
+    ['allFamily', currentPage],
+    async () => getAllFamilyData(currentPage),
+    {
+      onSettled: data => {
+        // setTotalCount(data?.data?.count);
+        setFamilyData(data?.data?.rows);
+      },
+    },
+  );
 
-  const [refreshing, setRefreshing] = useState(false);
+  // console.log(familyData?.some((item: any) => item?.FamilyOwner?.id === 1));
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+  // console.log('new', data?.data.length === totalCount);
 
-  const MemoizedText = React.memo(({children}: any) => (
-    <Text style={styles.text}>{children}</Text>
-  ));
+  // console.log(totalCount);
+
+  const fetchNextPage = async () => {
+    setCurrentPage(prevPage => prevPage + 1);
+  };
+
+  const fetchPrevPage = async () => {
+    if (currentPage > 1) {
+      setCurrentPage(prevPage => prevPage - 1);
+    }
+  };
 
   const ListItem = React.memo(({item, index}: any) => (
     <View
       key={index}
-      className="mx-5 rounded-md"
-      style={{elevation: 1, marginTop: 10, padding: 10}}>
+      className="mx-5 rounded-md mt-4 py-3 bg-white"
+      style={{elevation: 10, padding: 10}}>
       <View className="flex-row justify-between mx-6">
         <Text className="text-black text-lg font-bold">
-          <MemoizedText>{item.FamilyOwner.ownerNameNp}</MemoizedText>
+          {item.FamilyOwner.ownerNameNp}
           {/* {item.FamilyOwner.ownerNameNp} */}
         </Text>
-        <Text className="text-black text-sm underline font-bold">View</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate(NavigationStrings.PARIBARDETAIL, {id: item.id})
+          }>
+          <Text className="text-black text-sm underline font-bold">View</Text>
+        </TouchableOpacity>
       </View>
       <View className="flex-row flex-wrap  gap-8 p-5">
         <View className="flex-row items-center space-x-1">
           <Text className="text-black text-sm">क्र.स.</Text>
           <Text className="text-black text-sm ">
-            <MemoizedText>{item.id}</MemoizedText>
+            {item.id}
             {/* {item.id} */}
           </Text>
         </View>
 
         <View className="flex-row items-center space-x-1">
           <Text className="text-black text-sm">घर नं:</Text>
-          <Text className="text-black ">
-            <MemoizedText>{item.House.id}</MemoizedText>
-          </Text>
+          <Text className="text-black ">{item.House.id}</Text>
         </View>
 
         <View className="flex-row items-center space-x-1">
           <Text className="text-black text-sm">फोन नं :</Text>
-          <Text className="text-black text-sm">
-            <MemoizedText>{item.FamilyOwner.phone}</MemoizedText>
-          </Text>
+          <Text className="text-black text-sm">{item.FamilyOwner.phone}</Text>
         </View>
         <View className="flex-row items-center space-x-1">
           <Text className="text-black text-sm">परिवार संख्या:</Text>
           <Text className="text-black text-sm ">
-            <MemoizedText> {item.FamilyPopulation.memberNo}</MemoizedText>
+            {item.FamilyPopulation.memberNo}
           </Text>
         </View>
         <View className="flex-row items-center space-x-1">
-          <Text className="text-black text-sm">purus:</Text>
+          <Text className="text-black text-sm">पुरुष:</Text>
           <Text className="text-black text-sm ">
-            <MemoizedText>{item.FamilyPopulation.maleNo}</MemoizedText>
+            {item.FamilyPopulation.maleNo}
           </Text>
         </View>
 
         <View className="flex-row items-center space-x-1">
-          <Text className="text-black text-sm">mahila:</Text>
+          <Text className="text-black text-sm">महिला:</Text>
           <Text className="text-black text-sm ">
-            <MemoizedText> {item.FamilyPopulation.femaleNo}</MemoizedText>
+            {item.FamilyPopulation.femaleNo}
           </Text>
         </View>
 
         {item.FamilyPopulation.othersNo !== 0 && (
           <View className="flex-row items-center space-x-1">
-            <Text className="text-black text-sm">aanya</Text>
+            <Text className="text-black text-sm">अन्य:</Text>
             <Text className="text-black text-sm ">
-              <MemoizedText>{item.FamilyPopulation.othersNo}</MemoizedText>
+              {item.FamilyPopulation.othersNo}
             </Text>
           </View>
         )}
@@ -98,60 +117,22 @@ const ParibarbibaranComponent = () => {
     </View>
   ));
 
-  // const renderItem = useCallback(
-  //   ({item, index}: any) => (
-  //     <View
-  //       key={index}
-  //       className="mx-5 rounded-md"
-  //       style={{elevation: 1, marginTop: 10, padding: 10}}>
-  //       <View className="flex-row flex-wrap  gap-8 p-5">
-  //         <View className="flex-row items-center space-x-1">
-  //           <Text className="text-black text-sm">परिवरमुलीको नाम :</Text>
-  //           <Text className="text-black text-sm ">
-  //             {item.FamilyOwner.ownerNameNp}
-  //           </Text>
-  //         </View>
-
-  //         <View className="flex-row items-center space-x-1">
-  //           <Text className="text-black text-sm">कृषि:</Text>
-  //           <Text className="text-black text-sm ">{item.agricultureType}</Text>
-  //         </View>
-  //         <View className="flex-row items-center space-x-1">
-  //           <Text className="text-black text-sm">फोहोर व्यवस्थापन:</Text>
-  //           <Text className="text-black text-sm ">{item.wasteManagement}</Text>
-  //         </View>
-  //         <View className="flex-row items-center space-x-1">
-  //           <Text className="text-black text-sm">स्वास्थ्य:</Text>
-  //           <Text className="text-black text-sm ">
-  //             {item.FamilyService.health}
-  //           </Text>
-  //         </View>
-
-  //         <View className="flex-row items-center space-x-1">
-  //           <Text className="text-black text-sm">शिक्षा:</Text>
-  //           <Text className="text-black text-sm ">
-  //             {item.FamilyService.education}
-  //           </Text>
-  //         </View>
-
-  //         <View className="flex-row items-center space-x-1">
-  //           <Text className="text-black text-sm">व्यक्तिगत गाडी:</Text>
-  //           <Text className="text-black text-sm ">
-  //             {item.FamilyService.privateVehicle}
-  //           </Text>
-  //         </View>
-
-  //         <View className="flex-row items-center space-x-1">
-  //           <Text className="text-black text-sm">खाना पकाउने इन्धन:</Text>
-  //           <Text className="text-black text-sm ">
-  //             {item.FamilyService.cookingSource}
-  //           </Text>
-  //         </View>
-  //       </View>
-  //     </View>
-  //   ),
-  //   [familyData],
-  // );
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <ActivityIndicator size="large" animating={true} color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView className="h-full bg-[#f1eded]">
@@ -168,18 +149,35 @@ const ParibarbibaranComponent = () => {
         </Button>
       </View>
       <FlatList
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
         removeClippedSubviews={true}
-        // maxToRenderPerBatch={4}
-        initialNumToRender={4}
+        maxToRenderPerBatch={10}
+        initialNumToRender={6}
         data={familyData}
         renderItem={({item}) => <ListItem item={item} />}
+        ListFooterComponent={() =>
+          loading ? (
+            <ActivityIndicator className="mt-3" size="large" color="blue" />
+          ) : null
+        }
         keyExtractor={item => item.id.toString()}
       />
 
-      {/* </ScrollView> */}
+      <View className="flex-row justify-between p-2">
+        <Button
+          onPress={fetchPrevPage}
+          className="bg-cyan-900 rounded-full"
+          disabled={currentPage === 1 ? true : false}>
+          <Text className="text-white tracking-widest font-bold">Previous</Text>
+        </Button>
+        <Button
+          className="bg-cyan-900 rounded-full"
+          onPress={fetchNextPage}
+          disabled={familyData?.some(
+            (item: any) => item?.FamilyOwner?.id === 1,
+          )}>
+          <Text className="text-white tracking-widest font-bold">Next</Text>
+        </Button>
+      </View>
     </SafeAreaView>
     // <SafeAreaView style={styles.container}>
     //   <Text className="text-lg text-black">पारिवारिक विवरण</Text>
@@ -245,7 +243,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 12,
   },
   divider: {
     borderBottomWidth: 2,

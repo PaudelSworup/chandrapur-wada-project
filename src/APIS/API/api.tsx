@@ -3,6 +3,7 @@
 // let API: string = 'http://api';
 let API: string = 'http://43.204.1.138:9000/api';
 // let API: string = 'http://192.168.1.67:9000/api';
+export const IMAGE_URL = 'http://43.204.1.138:9000';
 
 //get the house type
 export const getHouseType = async () => {
@@ -344,7 +345,16 @@ export const rentDropDown = async () => {
   }
 };
 
-export const getAllFamilyData = async () => {
+export const getAllFamilyData = async (id: number) => {
+  try {
+    const data = await fetch(`${API}/family/${id}`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+};
+
+export const getAllFamilyAll = async () => {
   try {
     const data = await fetch(`${API}/family/all`);
     return data.json();
@@ -362,7 +372,7 @@ export const getHouseData = async (page: number) => {
   }
 };
 
-export const uplaodImage = async (data: any, id: any) => {
+export const uplaodImage = async (data: any, id: number) => {
   try {
     return await fetch(`${API}/profile/${id}`, {
       method: 'POST',
@@ -374,6 +384,24 @@ export const uplaodImage = async (data: any, id: any) => {
       return res.json();
     });
   } catch (err) {
+    return console.log(err);
+  }
+};
+
+export const houseDetail = async (id: number) => {
+  try {
+    const data = await fetch(`${API}/house/detail/${id}`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+};
+
+export const paribarDetail = async (id: number) => {
+  try {
+    const data = await fetch(`${API}/family/detail/${id}`);
+    return data.json();
+  } catch (err: any) {
     return console.log(err);
   }
 };

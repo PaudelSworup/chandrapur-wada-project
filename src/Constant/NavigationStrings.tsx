@@ -20,4 +20,6 @@ export default {
   REGISTER: 'Register',
   MAPS: 'map',
   LAUNCH: 'NOINTERNET',
+  GHRDETAIL: 'GHARBIBARANDETAIL',
+  PARIBARDETAIL: 'PARIBARDETAIL',
 };

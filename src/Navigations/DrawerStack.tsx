@@ -257,7 +257,7 @@ const DrawerStack = () => {
           ),
         })}
       />
-
+      {/* 
       <Drawer.Screen
         name={NavigationStrings.MAPS}
         component={Map}
@@ -269,7 +269,7 @@ const DrawerStack = () => {
             </Text>
           ),
         })}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };
