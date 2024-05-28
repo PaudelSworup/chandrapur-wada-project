@@ -2,7 +2,7 @@
 // let API: string = 'http://192.168.18.52:9000/api';
 // let API: string = 'http://api';
 let API: string = 'http://43.204.1.138:9000/api';
-// let API: string = 'http://192.168.1.67:9000/api';
+let API2: string = 'http://192.168.1.67:9000/api';
 export const IMAGE_URL = 'http://43.204.1.138:9000';
 
 //get the house type
@@ -405,3 +405,38 @@ export const paribarDetail = async (id: number) => {
     return console.log(err);
   }
 };
+
+export const addRoadDetail = async (data: any) => {
+  try {
+    return await fetch(`${API2}/road/add`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => {
+      return res.json();
+    });
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
+export const getRoadData = async (page: number) => {
+  try {
+    const data = await fetch(`${API2}/road/${page}`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+};
+
+export const getRoadDetail = async(id:number)=>{
+  try {
+    const data = await fetch(`${API2}/road/detail/${id}`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+}

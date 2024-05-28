@@ -218,3 +218,32 @@ export const familyValidationSchema = Yup.object().shape({
   // transportType: Yup.string(),
   // entryBy: Yup.string().required('एंट्री गर्ने वेक्ति को नाम आवश्यक छ।'),
 });
+
+export const roadInitialValues = {
+  nameEng: '',
+  nameNepali: '',
+  startLandmark: '',
+  startLongitude: '',
+  startLatitude: '',
+  currentPurposeWidth: '',
+  FuturePuropseWidth: '',
+  startWardDropDown: '',
+  StartToleDropDown: '',
+  remarks: '',
+};
+
+export const roadValidationSchema = Yup.object().shape({
+  nameEng: Yup.string().min(3, 'too short').max(50, 'too long'),
+  nameNepali: Yup.string()
+    .min(3, 'too short')
+    .max(50, 'too long')
+    .required('Nepali ma name halnuhos'),
+  startLandmark: Yup.string().required('Landmark is required'),
+  startLongitude: Yup.string().required('Longitude is required'),
+  startLatitude: Yup.string().required('Latitude is required'),
+  currentPurposeWidth: Yup.string().required('current width is required'),
+  FuturePuropseWidth: Yup.string().required('Future width is required'),
+  startWardDropDown: Yup.string().required('select atleast one item'),
+  StartToleDropDown: Yup.string().required('select atleast one item'),
+  remarks: Yup.string(),
+});

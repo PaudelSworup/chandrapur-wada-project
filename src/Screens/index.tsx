@@ -20,3 +20,6 @@ export {default as Map} from './Map/Map';
 export {default as InternetConnection} from './Internet/InternetConnection';
 export {default as GharBibaranDetail} from './Gharbibaran/GharBibaranDetail';
 export {default as ParibarBinaranDetail} from './Paribarbibaran/ParibarBibaranDetail';
+export {default as Road} from './Road/Road';
+export {default as RoadBibaran} from './Road/RoadBibaran';
+export {default as RoadDetail} from './Road/RoadDetail';

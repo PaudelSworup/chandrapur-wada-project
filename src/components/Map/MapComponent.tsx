@@ -45,15 +45,19 @@ type houseStackParamList = {
   };
 };
 
+type roadStackParamList = {
+  roadId: {id?: string};
+};
+
 const MapsComponent = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'uniqueKey'>>();
-  const {id} = route.params;
+
+  const Roadroute = useRoute<RouteProp<roadStackParamList, 'roadId'>>();
+  const {id} = Roadroute.params;
 
   const houseRoute =
     useRoute<RouteProp<houseStackParamList, 'coordinatesKey'>>();
   const {ids, latitude, longitude} = houseRoute.params;
-
-  console.log('house', ids, latitude, longitude);
 
   const newLat = latitude ? parseInt(latitude.toString()) : 0;
   const newLong = longitude ? parseInt(longitude.toString()) : 0;
@@ -140,6 +144,10 @@ const MapsComponent = () => {
     });
     if (id === 'house') {
       navigation.navigate(NavigationStrings.GHARSAMMANDHIBIBARAN);
+    }
+
+    if (id === 'road') {
+      navigation.navigate(NavigationStrings.ROADBIBARAN);
     }
     // }
   };

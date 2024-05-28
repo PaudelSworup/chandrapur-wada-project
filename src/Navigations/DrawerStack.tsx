@@ -14,6 +14,8 @@ import {
   Paribarbibaran,
   ParibarbibaranAdd,
   Parichaya,
+  Road,
+  RoadBibaran,
   Samparka,
   Sangsanstha,
   Srotsadhan,
@@ -257,6 +259,33 @@ const DrawerStack = () => {
           ),
         })}
       />
+
+      <Drawer.Screen
+        name={NavigationStrings.ROADBIBARAN}
+        component={Road}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerTitle: () => (
+            <Text style={styles.headerTitleText}>
+              चंद्रपुर नगरपालिका वडा नं ३
+            </Text>
+          ),
+        })}
+      />
+
+      <Drawer.Screen
+        name={NavigationStrings.ROAD}
+        component={RoadBibaran}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerTitle: () => (
+            <Text style={styles.headerTitleText}>
+              चंद्रपुर नगरपालिका वडा नं ३
+            </Text>
+          ),
+        })}
+      />
+
       {/* 
       <Drawer.Screen
         name={NavigationStrings.MAPS}

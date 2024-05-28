@@ -17,7 +17,6 @@ import {useQuery, useQueryClient} from 'react-query';
 import {TouchableOpacity} from 'react-native';
 import {pickImage} from '../../utils/docPicker';
 import {useToast} from 'react-native-toast-notifications';
-import {VirtualizedList} from 'react-native';
 
 const GharbibaranComponent = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -245,23 +244,7 @@ const GharbibaranComponent = () => {
         </Button>
       </View>
 
-      {/* <VirtualizedList
-        data={houseData}
-        renderItem={renderItem}
-        keyExtractor={item => Math.random().toString(36).substring(2)}
-        getItemCount={data => data.length}
-        getItem={(data, index) => data[index]}
-        // onEndReached={fetchMoreHouseData}
-        initialNumToRender={6}
-        maxToRenderPerBatch={10}
-        windowSize={11}
-        updateCellsBatchingPeriod={100}
-        ListFooterComponent={() =>
-          loading ? (
-            <ActivityIndicator className="mt-3" size="large" color="blue" />
-          ) : null
-        }
-      /> */}
+      
 
       <FlatList
         removeClippedSubviews={true}

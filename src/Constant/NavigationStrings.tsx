@@ -22,4 +22,7 @@ export default {
   LAUNCH: 'NOINTERNET',
   GHRDETAIL: 'GHARBIBARANDETAIL',
   PARIBARDETAIL: 'PARIBARDETAIL',
+  ROADBIBARAN: 'बाटो सम्बन्धी विवरण',
+  ROAD: 'बाटोको विवरण',
+  ROADDETAIL: 'ROADETAILS',
 };
