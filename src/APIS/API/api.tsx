@@ -408,7 +408,7 @@ export const paribarDetail = async (id: number) => {
 
 export const addRoadDetail = async (data: any) => {
   try {
-    return await fetch(`${API2}/road/add`, {
+    return await fetch(`${API}/road/add`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -425,18 +425,18 @@ export const addRoadDetail = async (data: any) => {
 
 export const getRoadData = async (page: number) => {
   try {
-    const data = await fetch(`${API2}/road/${page}`);
+    const data = await fetch(`${API}/road/${page}`);
     return data.json();
   } catch (err: any) {
     return console.log(err);
   }
 };
 
-export const getRoadDetail = async(id:number)=>{
+export const getRoadDetail = async (id: number) => {
   try {
-    const data = await fetch(`${API2}/road/detail/${id}`);
+    const data = await fetch(`${API}/road/detail/${id}`);
     return data.json();
   } catch (err: any) {
     return console.log(err);
   }
-}
+};

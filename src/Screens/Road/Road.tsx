@@ -10,8 +10,10 @@ import {
   roadValidationSchema,
 } from '../../utils/Validation/Validation';
 import {addRoadDetail} from '../../APIS/API/api';
+import {useToast} from 'react-native-toast-notifications';
 
 const Road = () => {
+  const toast = useToast();
   const {longitude, lattitude} = useAppSelector(state => state.coordinates);
   return (
     <ScrollView>
@@ -23,8 +25,8 @@ const Road = () => {
             startLatitude: lattitude.toString(),
           }}
           validationSchema={roadValidationSchema}
-          onSubmit={(values: any) => {
-            console.log(values);
+          onSubmit={(values: any, {resetForm}) => {
+            // console.log(values);
             const roadData = {
               nameNep: values.nameNepali,
               nameEng: values.nameEng,
@@ -38,12 +40,20 @@ const Road = () => {
               remarks: values.remarks,
             };
             addRoadDetail(roadData).then(res => {
-              console.log(res);
-            });
+              if (res?.success === true) {
+                toast.show(`${res?.message}`, {
+                  type: 'success',
+                  placement: 'bottom',
+                });
 
-            // createRoad(roadData).then((res) => {
-            //   console.log(res);
-            // });
+                resetForm();
+              } else {
+                toast.show(`${res?.error}`, {
+                  type: 'danger',
+                  placement: 'bottom',
+                });
+              }
+            });
           }}>
           {({values, errors, handleChange, handleSubmit}) => (
             <RoadInfo
