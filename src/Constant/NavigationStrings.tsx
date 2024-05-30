@@ -25,4 +25,5 @@ export default {
   ROADBIBARAN: 'बाटो सम्बन्धी विवरण',
   ROAD: 'बाटोको विवरण',
   ROADDETAIL: 'ROADETAILS',
+  ENDPOINT:"ENDPOINT"
 };

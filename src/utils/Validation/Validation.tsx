@@ -247,3 +247,19 @@ export const roadValidationSchema = Yup.object().shape({
   StartToleDropDown: Yup.string().required('select atleast one item'),
   remarks: Yup.string(),
 });
+
+export const endPointValue = {
+  endLandmark: '',
+  endLongitude: '',
+  endLatitude: '',
+  endWardDropDown: '',
+  endToleDropDown: '',
+};
+
+export const endPointValuesSchema = Yup.object().shape({
+  endLandmark: Yup.string().required('Landmark is required'),
+  endLongitude: Yup.string().required('Longitude is required'),
+  endLatitude: Yup.string().required('Latitude is required'),
+  endWardDropDown: Yup.string().required('select atleast one item'),
+  endToleDropDown: Yup.string().required('select atleast one item'),
+});

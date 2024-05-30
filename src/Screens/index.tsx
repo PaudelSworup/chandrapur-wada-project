@@ -23,3 +23,4 @@ export {default as ParibarBinaranDetail} from './Paribarbibaran/ParibarBibaranDe
 export {default as Road} from './Road/Road';
 export {default as RoadBibaran} from './Road/RoadBibaran';
 export {default as RoadDetail} from './Road/RoadDetail';
+export {default as EndPointMain} from './Road/EndPointMain';

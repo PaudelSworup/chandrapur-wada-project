@@ -49,11 +49,29 @@ type roadStackParamList = {
   roadId: {id?: string};
 };
 
+type endPointStackParamList = {
+  endPointId: {endPoint?: string; uniqueId?: number};
+};
+
+type RoadBibaranParamList = {
+  roadDetail: {
+    stringID: string;
+    roadbibaranid: number;
+    Roadlatitude: number;
+    Roadlongitude: number;
+  };
+};
+
 const MapsComponent = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'uniqueKey'>>();
 
   const Roadroute = useRoute<RouteProp<roadStackParamList, 'roadId'>>();
   const {id} = Roadroute.params;
+
+  const endPointRoute =
+    useRoute<RouteProp<endPointStackParamList, 'endPointId'>>();
+  const {endPoint, uniqueId} = endPointRoute.params;
+  console.log('unique id', uniqueId);
 
   const houseRoute =
     useRoute<RouteProp<houseStackParamList, 'coordinatesKey'>>();
@@ -61,8 +79,15 @@ const MapsComponent = () => {
 
   const newLat = latitude ? parseInt(latitude.toString()) : 0;
   const newLong = longitude ? parseInt(longitude.toString()) : 0;
-  // const newLat: number = latitude;
-  // const newLong: number = longitude;
+
+  const roadDetail = useRoute<RouteProp<RoadBibaranParamList, 'roadDetail'>>();
+  const {Roadlatitude, Roadlongitude} = roadDetail.params;
+
+  // console.log('roadlat', Roadlatitude);
+
+  const roadLat = Roadlatitude ? parseInt(Roadlatitude.toString()) : 0;
+  const roadLong = Roadlongitude ? parseInt(Roadlongitude.toString()) : 0;
+  // console.log('road', roadLat, roadLong);
 
   // console.log(id);
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -113,6 +138,13 @@ const MapsComponent = () => {
     longitudeDelta: 0.01,
   };
 
+  const initialRegion3 = {
+    latitude: roadLat,
+    longitude: roadLong,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+
   const currentPosition = useQuery(
     ['coordinates'],
     async () => getCurrentLocation(),
@@ -149,6 +181,9 @@ const MapsComponent = () => {
     if (id === 'road') {
       navigation.navigate(NavigationStrings.ROADBIBARAN);
     }
+
+    if (endPoint === 'endPoint')
+      navigation.navigate(NavigationStrings.ENDPOINT,{id:uniqueId});
     // }
   };
 
@@ -198,36 +233,6 @@ const MapsComponent = () => {
     }, [handleBackPress]),
   );
 
-  // const handleBackPress = useCallback(() => {
-  //   // Show alert dialog when back button is pressed
-  //   Alert.alert(
-  //     'Go back',
-  //     'Are you sure you want to Go back?',
-  //     [
-  //       {text: 'Cancel', style: 'cancel'},
-  //       {
-  //         text: 'OK',
-  //         onPress: () => {
-  //           navigation.goBack();
-  //           console.log('values are reset');
-  //         },
-  //       },
-  //     ],
-  //     {cancelable: false},
-  //   );
-  //   // Return true to prevent the default back button action
-  //   return true;
-  // }, [navigation]);
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-  //     return () => {
-  //       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-  //     };
-  //   }, [handleBackPress]),
-  // );
-
   return (
     <>
       {coordinates ? (
@@ -240,7 +245,14 @@ const MapsComponent = () => {
               width: '100%',
               height: windowHeight > 600 ? '70%' : '40%',
             }}
-            initialRegion={newLat && newLong ? initialRegion2 : initialRegion}
+            // initialRegion={newLat && newLong ? initialRegion2 : initialRegion}
+            initialRegion={
+              newLat && newLong
+                ? initialRegion2
+                : roadLat && roadLong
+                ? initialRegion3
+                : initialRegion
+            }
             loadingEnabled={true}
             onPress={e => {
               setMarker(e.nativeEvent.coordinate);
@@ -256,7 +268,14 @@ const MapsComponent = () => {
             ) : (
               <Marker
                 draggable
-                coordinate={newLat && newLong ? initialRegion2 : initialRegion}
+                coordinate={
+                  newLat && newLong
+                    ? initialRegion2
+                    : roadLat && roadLong
+                    ? initialRegion3
+                    : initialRegion
+                }
+                // coordinate={newLat && newLong ? initialRegion2 : initialRegion}
               />
             )}
           </MapView>

@@ -81,42 +81,72 @@ const RoadDetailComp = () => {
           <Divider style={styles.divider} />
 
           <View style={styles.row}>
-            <Text style={styles.text}>startWard </Text>
-            <Text style={styles.text}>{data?.roads.startWard}</Text>
+            <Text style={styles.text}>सुरुको वडा </Text>
+            <Text style={styles.text}>{data?.startWardData[0].name}</Text>
           </View>
           <Divider style={styles.divider} />
 
           <View style={styles.row}>
-            <Text style={styles.text}>startTole </Text>
-            <Text style={styles.text}>{data?.roads.startTole}</Text>
+            <Text style={styles.text}>सुरुको टोल </Text>
+            <Text style={styles.text}>{data?.startToleData[0].name}</Text>
           </View>
           <Divider style={styles.divider} />
 
+          {data?.trackData?.map((track: any, index: any) => (
+            <View key={index}>
+              <View style={styles.row}>
+                <Text style={styles.text}>{track.type} देशान्तर</Text>
+                <Text style={styles.text}>{track.longitude}</Text>
+              </View>
+              <Divider style={styles.divider} />
+              <View style={styles.row}>
+                <Text style={styles.text}>{track.type} अक्षांश</Text>
+                <Text style={styles.text}>{track.latitude}</Text>
+              </View>
+              <Divider style={styles.divider} />
+            </View>
+          ))}
+
+          {/* <View style={styles.row}>
+            <Text style={styles.text}>देशान्तर </Text>
+            <Text style={styles.text}>{data?.roads.Track.longitude}</Text>
+          </View>
+          <Divider style={styles.divider} />
+
+          <View style={styles.row}>
+            <Text style={styles.text}> अक्षांश </Text>
+            <Text style={styles.text}>{data?.Track.latitude}</Text>
+          </View>
+          <Divider style={styles.divider} /> */}
+
           {data && data?.roads.endLandmark != null && (
-            <View className="flex-row items-center space-x-1">
-              <Text className="text-black text-base"> अन्त्य स्थलचिन्ह</Text>
-              <Text className="text-black text-base ">
-                {data?.roads.endLandmark}
-              </Text>
-            </View>
+            <>
+              <View style={styles.row}>
+                <Text style={styles.text}> अन्त्य स्थलचिन्ह</Text>
+                <Text style={styles.text}>{data?.roads.endLandmark}</Text>
+              </View>
+              <Divider style={styles.divider} />
+            </>
           )}
 
-          {data && data?.roads.endWard != null && (
-            <View className="flex-row items-center space-x-1">
-              <Text className="text-black text-base"> अन्त्य वडा</Text>
-              <Text className="text-black text-base ">
-                {data?.roads.endWard}
-              </Text>
-            </View>
+          {data && data?.endWardData[0] != null && (
+            <>
+              <View style={styles.row}>
+                <Text style={styles.text}> अन्त्य वडा</Text>
+                <Text style={styles.text}>{data?.endWardData[0].name}</Text>
+              </View>
+              <Divider style={styles.divider} />
+            </>
           )}
 
-          {data && data?.roads.endTole != null && (
-            <View className="flex-row items-center space-x-1">
-              <Text className="text-black text-base"> अन्त्य टोल</Text>
-              <Text className="text-black text-base ">
-                {data?.roads.endTole}
-              </Text>
-            </View>
+          {data && data?.endToleData[0] != null && (
+            <>
+              <View style={styles.row}>
+                <Text style={styles.text}> अन्त्य टोल</Text>
+                <Text style={styles.text}>{data?.endToleData[0].name}</Text>
+              </View>
+              <Divider style={styles.divider} />
+            </>
           )}
         </ScrollView>
       </ScrollView>

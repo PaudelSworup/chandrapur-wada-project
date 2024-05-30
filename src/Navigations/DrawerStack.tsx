@@ -5,6 +5,7 @@ import NavigationStrings from '../Constant/NavigationStrings';
 import {Image, StyleSheet, Text, useWindowDimensions} from 'react-native';
 import {
   Chairman,
+  EndPointMain,
   Gharbibaran,
   GharbibaranAdd,
   Ghumnethau,
@@ -285,6 +286,20 @@ const DrawerStack = () => {
           ),
         })}
       />
+
+
+{/* <Drawer.Screen
+        name={NavigationStrings.}
+        component={EndPointMain}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerTitle: () => (
+            <Text style={styles.headerTitleText}>
+              चंद्रपुर नगरपालिका वडा नं ३
+            </Text>
+          ),
+        })}
+      /> */}
 
       {/* 
       <Drawer.Screen

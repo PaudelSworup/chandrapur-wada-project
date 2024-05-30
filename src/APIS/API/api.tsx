@@ -440,3 +440,37 @@ export const getRoadDetail = async (id: number) => {
     return console.log(err);
   }
 };
+
+export const postTrack = async (data: any) => {
+  try {
+    return await fetch(`${API}/road/track/add`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => {
+      return res.json();
+    });
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
+export const updateRoadData = async (data: any, id: number) => {
+  try {
+    return await fetch(`${API}/road/update/${id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => {
+      return res.json();
+    });
+  } catch (err) {
+    return console.log(err);
+  }
+};

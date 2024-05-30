@@ -9,6 +9,7 @@ import {
   Register,
   GharBibaranDetail,
   RoadDetail,
+  EndPointMain,
 } from '../Screens';
 import DrawerStack from './DrawerStack';
 import {StyleSheet, Text} from 'react-native';
@@ -74,6 +75,19 @@ const HomeStack = () => {
       <Stack.Screen
         name={NavigationStrings.ROADDETAIL}
         component={RoadDetail}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerTitle: () => (
+            <Text style={styles.headerTitleText}>
+              चंद्रपुर नगरपालिका वडा नं ३
+            </Text>
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name={NavigationStrings.ENDPOINT}
+        component={EndPointMain}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
           headerTitle: () => (
