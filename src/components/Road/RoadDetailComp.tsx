@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {ActivityIndicator, Divider} from 'react-native-paper';
 import {useQuery} from 'react-query';
 import {RouteProp, useRoute} from '@react-navigation/native';
@@ -17,6 +17,10 @@ type RootStackParamList = {
 };
 
 const RoadDetailComp = () => {
+  const [startWard, setStartWard] = useState<any>();
+  const [startTole, setStartTole] = useState<any>();
+  const [endWard, setEndWard] = useState<any>();
+  const [endTole, setEndTole] = useState<any>();
   const route = useRoute<RouteProp<RootStackParamList, 'detailKey'>>();
   const {id} = route.params;
   const ID = parseInt(id as string);
@@ -25,6 +29,10 @@ const RoadDetailComp = () => {
     async () => getRoadDetail(ID),
     {
       onSettled: data => {
+        setStartWard(data?.startWardData[0]?.name);
+        setStartTole(data?.startToleData[0]?.name);
+        setEndWard(data?.endWardData[0]?.name);
+        setEndTole(data?.endToleData[0]?.name);
         // console.log(data);
         // console.log(data);
       },
@@ -64,44 +72,44 @@ const RoadDetailComp = () => {
           <Text className="text-lg text-black">बाटोको विवरण</Text>
           <View style={styles.row}>
             <Text style={styles.text}>नाम </Text>
-            <Text style={styles.text}>{data?.roads.nameNep}</Text>
+            <Text style={styles.text}>{data?.roads?.nameNep}</Text>
           </View>
           <Divider style={styles.divider} />
 
           <View style={styles.row}>
             <Text style={styles.text}>सुरु स्थलचिन्ह</Text>
-            <Text style={styles.text}>{data?.roads.startLandmark}</Text>
+            <Text style={styles.text}>{data?.roads?.startLandmark}</Text>
           </View>
           <Divider style={styles.divider} />
 
           <View style={styles.row}>
             <Text style={styles.text}>भविष्यको उद्देश्य चौडाइ</Text>
-            <Text style={styles.text}>{data?.roads.futurePurposeWidth}</Text>
+            <Text style={styles.text}>{data?.roads?.futurePurposeWidth}</Text>
           </View>
           <Divider style={styles.divider} />
 
           <View style={styles.row}>
             <Text style={styles.text}>सुरुको वडा </Text>
-            <Text style={styles.text}>{data?.startWardData[0].name}</Text>
+            <Text style={styles.text}>{startWard}</Text>
           </View>
           <Divider style={styles.divider} />
 
           <View style={styles.row}>
             <Text style={styles.text}>सुरुको टोल </Text>
-            <Text style={styles.text}>{data?.startToleData[0].name}</Text>
+            <Text style={styles.text}>{startTole}</Text>
           </View>
           <Divider style={styles.divider} />
 
           {data?.trackData?.map((track: any, index: any) => (
             <View key={index}>
               <View style={styles.row}>
-                <Text style={styles.text}>{track.type} देशान्तर</Text>
-                <Text style={styles.text}>{track.longitude}</Text>
+                <Text style={styles.text}>{track?.type} देशान्तर</Text>
+                <Text style={styles.text}>{track?.longitude}</Text>
               </View>
               <Divider style={styles.divider} />
               <View style={styles.row}>
-                <Text style={styles.text}>{track.type} अक्षांश</Text>
-                <Text style={styles.text}>{track.latitude}</Text>
+                <Text style={styles.text}>{track?.type} अक्षांश</Text>
+                <Text style={styles.text}>{track?.latitude}</Text>
               </View>
               <Divider style={styles.divider} />
             </View>
@@ -119,7 +127,7 @@ const RoadDetailComp = () => {
           </View>
           <Divider style={styles.divider} /> */}
 
-          {data && data?.roads.endLandmark != null && (
+          {data && data?.roads?.endLandmark != null && (
             <>
               <View style={styles.row}>
                 <Text style={styles.text}> अन्त्य स्थलचिन्ह</Text>
@@ -129,21 +137,21 @@ const RoadDetailComp = () => {
             </>
           )}
 
-          {data && data?.endWardData[0] != null && (
+          {data && endWard != null && (
             <>
               <View style={styles.row}>
                 <Text style={styles.text}> अन्त्य वडा</Text>
-                <Text style={styles.text}>{data?.endWardData[0].name}</Text>
+                <Text style={styles.text}>{endWard}</Text>
               </View>
               <Divider style={styles.divider} />
             </>
           )}
 
-          {data && data?.endToleData[0] != null && (
+          {data && endTole != null && (
             <>
               <View style={styles.row}>
                 <Text style={styles.text}> अन्त्य टोल</Text>
-                <Text style={styles.text}>{data?.endToleData[0].name}</Text>
+                <Text style={styles.text}>{endTole}</Text>
               </View>
               <Divider style={styles.divider} />
             </>

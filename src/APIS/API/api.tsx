@@ -474,3 +474,73 @@ export const updateRoadData = async (data: any, id: number) => {
     return console.log(err);
   }
 };
+
+export const updateTrackData = async (data: any, id: number) => {
+  try {
+    return await fetch(`${API}/track/update/${id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => {
+      return res.json();
+    });
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
+export const addBridgeData = async (data: any) => {
+  try {
+    return await fetch(`${API}/bridge/add`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(res => {
+      return res.json();
+    });
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
+export const bridgeTypeDropDown = async () => {
+  try {
+    const data = await fetch(`${API}/bridge/type`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+};
+
+export const bridgeStatusDropDown = async () => {
+  try {
+    const data = await fetch(`${API}/bridge/status`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+};
+
+export const getBridgeData = async (page: number) => {
+  try {
+    const data = await fetch(`${API}/bridge/${page}`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+};
+
+export const getBridgeDetail = async (id: number) => {
+  try {
+    const data = await fetch(`${API}/bridge/detail/${id}`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+};

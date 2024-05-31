@@ -10,10 +10,13 @@ import {
   GharBibaranDetail,
   RoadDetail,
   EndPointMain,
+  Bridge,
+  BridgeDetail,
 } from '../Screens';
 import DrawerStack from './DrawerStack';
-import {StyleSheet, Text} from 'react-native';
+import {Image, StyleSheet, Text} from 'react-native';
 import ParibarBibaranDetail from '../Screens/Paribarbibaran/ParibarBibaranDetail';
+import {View} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,16 +27,26 @@ const HomeStack = () => {
       fontSize: 20,
       color: 'black',
     },
-    headerImage: {
-      width: 30,
-      height: 30,
-      marginRight: 320,
-    },
   });
+
+  const headerTitleComponent = () => (
+    <View className="flex-row gap-1">
+      <Image
+        source={{
+          uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Emblem_of_Nepal.svg/1200px-Emblem_of_Nepal.svg.png',
+        }}
+        className="w-[30px] h-[30px]"
+      />
+      <Text style={styles.headerTitleText}>चंद्रपुर नगरपालिका वडा नं ३</Text>
+    </View>
+  );
+
   return (
     <Stack.Navigator
       initialRouteName={NavigationStrings.LAUNCH}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen name={NavigationStrings.DRAWER} component={DrawerStack} />
       <Stack.Screen name={NavigationStrings.LOGIN} component={Login} />
       <Stack.Screen name={NavigationStrings.REGISTER} component={Register} />
@@ -41,6 +54,11 @@ const HomeStack = () => {
       <Stack.Screen
         name={NavigationStrings.GHRDETAIL}
         component={GharBibaranDetail}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerShown: true,
+          headerTitle: headerTitleComponent,
+        })}
       />
       <Stack.Screen
         name={NavigationStrings.LAUNCH}
@@ -51,11 +69,8 @@ const HomeStack = () => {
         component={Map}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerShown: true,
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -64,11 +79,8 @@ const HomeStack = () => {
         component={ParibarBibaranDetail}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerShown: true,
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -77,11 +89,8 @@ const HomeStack = () => {
         component={RoadDetail}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerShown: true,
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -90,11 +99,28 @@ const HomeStack = () => {
         component={EndPointMain}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerShown: true,
+          headerTitle: headerTitleComponent,
+        })}
+      />
+
+      <Stack.Screen
+        name={NavigationStrings.BRIDGE}
+        component={Bridge}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerShown: true,
+          headerTitle: headerTitleComponent,
+        })}
+      />
+
+      <Stack.Screen
+        name={NavigationStrings.BRIDGEDETAIL}
+        component={BridgeDetail}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerShown: true,
+          headerTitle: headerTitleComponent,
         })}
       />
     </Stack.Navigator>

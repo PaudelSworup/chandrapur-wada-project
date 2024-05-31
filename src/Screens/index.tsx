@@ -1,6 +1,5 @@
 export {default as Home} from './Home/Home';
 export {default as Chairman} from './Message/Chairman';
-export {default as Owner} from './Homeowner/Owner';
 export {default as Parichaya} from './Parichaya/Parichaya';
 export {default as WadaPratinidhi} from './WadaPratinidhi/WadaPratinidhi';
 export {default as Karmachari} from './Karmachari/Karmachari';
@@ -24,3 +23,6 @@ export {default as Road} from './Road/Road';
 export {default as RoadBibaran} from './Road/RoadBibaran';
 export {default as RoadDetail} from './Road/RoadDetail';
 export {default as EndPointMain} from './Road/EndPointMain';
+export {default as Bridge} from './Bridge/Bridge';
+export {default as BridgeBibaran} from './Bridge/BridgeBibaran';
+export {default as BridgeDetail} from './Bridge/BridgeDetail';

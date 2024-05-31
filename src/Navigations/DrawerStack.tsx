@@ -4,14 +4,11 @@ import NavigationStrings from '../Constant/NavigationStrings';
 // import Chairman from '../Screens/Message/Chairman';
 import {Image, StyleSheet, Text, useWindowDimensions} from 'react-native';
 import {
-  Chairman,
-  EndPointMain,
+  BridgeBibaran,
   Gharbibaran,
   GharbibaranAdd,
   Ghumnethau,
   Karmachari,
-  Map,
-  Owner,
   Paribarbibaran,
   ParibarbibaranAdd,
   Parichaya,
@@ -25,6 +22,7 @@ import {
   WadaPratinidhi,
 } from '../Screens';
 import CustomDrawer from '../components/DrawerComponent/CustomDrawer';
+import {View} from 'react-native';
 
 const Drawer = createDrawerNavigator();
 
@@ -43,6 +41,18 @@ const DrawerStack = () => {
     },
   });
 
+  const headerTitleComponent = () => (
+    <View className="flex-row gap-1">
+      <Image
+        source={{
+          uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Emblem_of_Nepal.svg/1200px-Emblem_of_Nepal.svg.png',
+        }}
+        className="w-[30px] h-[30px]"
+      />
+      <Text style={styles.headerTitleText}>चंद्रपुर नगरपालिका वडा नं ३</Text>
+    </View>
+  );
+
   return (
     <Drawer.Navigator
       backBehavior="history"
@@ -57,51 +67,22 @@ const DrawerStack = () => {
         headerStyle: {
           backgroundColor: '#F9F9F9',
         },
-        headerRight: () => (
-          <Image
-            source={{
-              uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Emblem_of_Nepal.svg/1200px-Emblem_of_Nepal.svg.png',
-            }}
-            style={styles.headerImage}
-          />
-        ),
       }}>
       <Drawer.Screen
         name={NavigationStrings.PARICHAYA}
         component={Parichaya}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
-
-      {/* <Drawer.Screen
-        name={NavigationStrings.CHAIRMAN}
-        component={Chairman}
-        options={({navigation}) => ({
-          headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
-        })}
-      /> */}
 
       <Drawer.Screen
         name={NavigationStrings.WADAPRATINIDHI}
         component={WadaPratinidhi}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -110,11 +91,7 @@ const DrawerStack = () => {
         component={Karmachari}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -123,11 +100,7 @@ const DrawerStack = () => {
         component={Tole}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -136,11 +109,7 @@ const DrawerStack = () => {
         component={Gharbibaran}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -149,37 +118,16 @@ const DrawerStack = () => {
         component={GharbibaranAdd}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
-
-      {/* <Drawer.Screen
-        name={NavigationStrings.HOMEOWNER}
-        component={Owner}
-        options={({navigation}) => ({
-          headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
-        })}
-      /> */}
 
       <Drawer.Screen
         name={NavigationStrings.PARIBARBIBARAN}
         component={Paribarbibaran}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -188,11 +136,7 @@ const DrawerStack = () => {
         component={ParibarbibaranAdd}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -201,11 +145,7 @@ const DrawerStack = () => {
         component={Sangsanstha}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -214,11 +154,7 @@ const DrawerStack = () => {
         component={Srotsadhan}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -227,11 +163,7 @@ const DrawerStack = () => {
         component={Ghumnethau}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -240,11 +172,7 @@ const DrawerStack = () => {
         component={Suchana}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -253,11 +181,7 @@ const DrawerStack = () => {
         component={Samparka}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -266,11 +190,7 @@ const DrawerStack = () => {
         component={Road}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
@@ -279,41 +199,18 @@ const DrawerStack = () => {
         component={RoadBibaran}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
       />
 
-
-{/* <Drawer.Screen
-        name={NavigationStrings.}
-        component={EndPointMain}
-        options={({navigation}) => ({
-          headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
-        })}
-      /> */}
-
-      {/* 
       <Drawer.Screen
-        name={NavigationStrings.MAPS}
-        component={Map}
+        name={NavigationStrings.BRIDGEBIBARAN}
+        component={BridgeBibaran}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
-          headerTitle: () => (
-            <Text style={styles.headerTitleText}>
-              चंद्रपुर नगरपालिका वडा नं ३
-            </Text>
-          ),
+          headerTitle: headerTitleComponent,
         })}
-      /> */}
+      />
     </Drawer.Navigator>
   );
 };

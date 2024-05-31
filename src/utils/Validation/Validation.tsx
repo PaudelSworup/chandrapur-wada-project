@@ -263,3 +263,27 @@ export const endPointValuesSchema = Yup.object().shape({
   endWardDropDown: Yup.string().required('select atleast one item'),
   endToleDropDown: Yup.string().required('select atleast one item'),
 });
+
+export const bridgeInitialValues = {
+  bridgeName: '',
+  bridgeNepaliName: '',
+  centerLongitude: '',
+  centerLatitude: '',
+  length: '',
+  width: '',
+  bridgeStatus: '',
+  bridgeType: '',
+  remarks: '',
+};
+
+export const bridgeValidationSchema = Yup.object().shape({
+  bridgeName: Yup.string(),
+  bridgeNepaliName: Yup.string(),
+  centerLongitude: Yup.string().required('Longitude is required'),
+  centerLatitude: Yup.string().required('Latitude is required'),
+  width: Yup.string().required(' width is required'),
+  length: Yup.string().required('length is required'),
+  bridgeStatus: Yup.string().required('select atleast one item'),
+  bridgeType: Yup.string().required('select atleast one item'),
+  remarks: Yup.string(),
+});

@@ -1,5 +1,5 @@
 import {View, Text, SafeAreaView, FlatList} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ActivityIndicator, Button} from 'react-native-paper';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -7,31 +7,57 @@ import NavigationStrings from '../../Constant/NavigationStrings';
 import {getRoadData} from '../../APIS/API/api';
 import {useQuery, useQueryClient} from 'react-query';
 import {TouchableOpacity} from 'react-native';
-import {useToast} from 'react-native-toast-notifications';
 
 const RoadBibaranComp = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [roadData, setRoadData] = useState<any>();
-  const toast = useToast();
+  const [startWard, setStartWard] = useState<any>();
+  const [startTole, setStartTole] = useState<any>();
+
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const queryClient = useQueryClient();
 
-  const {data, isLoading} = useQuery(
+  const road = useQuery(
     ['roadData', currentPage],
     async () => getRoadData(currentPage),
+
     {
-      onSettled: data => {
-        setRoadData(data?.roads?.rows);
-        // console.log(data?.startWardData);
-        // queryClient.invalidateQueries('roadData');
-        // setHouseData(data?);
+      refetchOnWindowFocus: true,
+      onSuccess: data => {
+        if (data) {
+          setRoadData(data?.roads?.rows);
+
+          if (data.startWardData && data.startWardData.length > 0) {
+            setStartWard(data.startWardData[0].name);
+          } else {
+            setStartWard(undefined); // or set it to some default value if you prefer
+          }
+
+          if (data.startToleData && data.startToleData.length > 0) {
+            setStartTole(data.startToleData[0].name);
+          } else {
+            setStartTole(undefined); // or set it to some default value if you prefer
+          }
+        }
+        // queryClient.invalidateQueries(['roadData']);
       },
     },
   );
 
-  // console.log(data?.startWardData);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      road.refetch();
+    });
+
+    return unsubscribe;
+  }, [navigation, road.refetch]);
+
+  // const startWard = data?.startWardData[0];
+
+  // const startWard = data?.startWardData[0]?.name;
+  // const startTole = data?.startToleData[0]?.name;
 
   //   console.log(houseData);
 
@@ -55,7 +81,7 @@ const RoadBibaranComp = () => {
         <View
           className="mx-5 rounded-md mt-4 py-3 bg-white"
           style={{elevation: 10}}>
-          <View className="p-5 flex-row justify-between">
+          <View className="p-5 flex-row justify-between flex-wrap">
             <Text className="text-black text-xl">बाटोको विवरण</Text>
 
             <TouchableOpacity
@@ -63,8 +89,6 @@ const RoadBibaranComp = () => {
                 navigation.navigate(NavigationStrings.MAPS, {
                   stringID: 'roadUpdate',
                   roadbibaranid: item?.id,
-                  Roadlatitude: item.Track.latitude,
-                  Roadlongitude: item.Track.longitude,
                 })
               }>
               <Text className="text-black text-base underline">Add Track</Text>
@@ -77,6 +101,13 @@ const RoadBibaranComp = () => {
               <Text className="text-black text-base underline">
                 Add End Point
               </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(NavigationStrings.BRIDGE, {id: item.id})
+              }>
+              <Text className="text-black text-base underline">Add bridge</Text>
             </TouchableOpacity>
           </View>
           <View className="flex-row justify-between flex-wrap gap-4 p-5">
@@ -101,16 +132,12 @@ const RoadBibaranComp = () => {
 
             <View className="flex-row items-center space-x-1">
               <Text className="text-black text-base"> सुरुको वडा</Text>
-              <Text className="text-black text-base ">
-                {data?.startWardData[0].name}
-              </Text>
+              <Text className="text-black text-base ">{startWard}</Text>
             </View>
 
             <View className="flex-row items-center space-x-1">
               <Text className="text-black text-base"> सुरुको टोल</Text>
-              <Text className="text-black text-base ">
-                {data?.startToleData[0].name}
-              </Text>
+              <Text className="text-black text-base ">{startTole}</Text>
             </View>
           </View>
         </View>
@@ -119,7 +146,7 @@ const RoadBibaranComp = () => {
     [],
   );
 
-  if (isLoading) {
+  if (road.isLoading) {
     return (
       <View
         style={{
@@ -155,11 +182,6 @@ const RoadBibaranComp = () => {
         maxToRenderPerBatch={10}
         data={roadData}
         renderItem={renderItem}
-        ListFooterComponent={() =>
-          loading ? (
-            <ActivityIndicator className="mt-3" size="large" color="blue" />
-          ) : null
-        }
         keyExtractor={item => item?.id.toString()}
       />
 

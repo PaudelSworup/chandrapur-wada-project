@@ -32,6 +32,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {requestLoacationPermission} from '../../APIS/AppApi/api';
 import NavigationStrings from '../../Constant/NavigationStrings';
 import {RouteProp, useRoute} from '@react-navigation/native';
+import {updateTrackData} from '../../APIS/API/api';
 
 type RootStackParamList = {
   uniqueKey: {id?: string};
@@ -53,6 +54,10 @@ type endPointStackParamList = {
   endPointId: {endPoint?: string; uniqueId?: number};
 };
 
+type BridgePointStackParamList = {
+  uniqueBridgeId: {bridgeId?: number};
+};
+
 type RoadBibaranParamList = {
   roadDetail: {
     stringID: string;
@@ -65,14 +70,22 @@ type RoadBibaranParamList = {
 const MapsComponent = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'uniqueKey'>>();
 
+  //bridge route id
+  const bridgeRoutes =
+    useRoute<RouteProp<BridgePointStackParamList, 'uniqueBridgeId'>>();
+  const {bridgeId} = bridgeRoutes.params;
+
+  //road routes id
   const Roadroute = useRoute<RouteProp<roadStackParamList, 'roadId'>>();
   const {id} = Roadroute.params;
 
+  //road endpoints id
   const endPointRoute =
     useRoute<RouteProp<endPointStackParamList, 'endPointId'>>();
   const {endPoint, uniqueId} = endPointRoute.params;
   console.log('unique id', uniqueId);
 
+  //house route id
   const houseRoute =
     useRoute<RouteProp<houseStackParamList, 'coordinatesKey'>>();
   const {ids, latitude, longitude} = houseRoute.params;
@@ -80,13 +93,14 @@ const MapsComponent = () => {
   const newLat = latitude ? parseInt(latitude.toString()) : 0;
   const newLong = longitude ? parseInt(longitude.toString()) : 0;
 
+  //road detail id
   const roadDetail = useRoute<RouteProp<RoadBibaranParamList, 'roadDetail'>>();
-  const {Roadlatitude, Roadlongitude} = roadDetail.params;
+  const {stringID, roadbibaranid} = roadDetail.params;
 
   // console.log('roadlat', Roadlatitude);
 
-  const roadLat = Roadlatitude ? parseInt(Roadlatitude.toString()) : 0;
-  const roadLong = Roadlongitude ? parseInt(Roadlongitude.toString()) : 0;
+  // const roadLat = Roadlatitude ? parseInt(Roadlatitude.toString()) : 0;
+  // const roadLong = Roadlongitude ? parseInt(Roadlongitude.toString()) : 0;
   // console.log('road', roadLat, roadLong);
 
   // console.log(id);
@@ -138,12 +152,12 @@ const MapsComponent = () => {
     longitudeDelta: 0.01,
   };
 
-  const initialRegion3 = {
-    latitude: roadLat,
-    longitude: roadLong,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
+  // const initialRegion3 = {
+  //   latitude: roadLat,
+  //   longitude: roadLong,
+  //   latitudeDelta: 0.01,
+  //   longitudeDelta: 0.01,
+  // };
 
   const currentPosition = useQuery(
     ['coordinates'],
@@ -174,6 +188,7 @@ const MapsComponent = () => {
       type: 'success',
       placement: 'bottom',
     });
+
     if (id === 'house') {
       navigation.navigate(NavigationStrings.GHARSAMMANDHIBIBARAN);
     }
@@ -182,9 +197,40 @@ const MapsComponent = () => {
       navigation.navigate(NavigationStrings.ROADBIBARAN);
     }
 
-    if (endPoint === 'endPoint')
-      navigation.navigate(NavigationStrings.ENDPOINT,{id:uniqueId});
-    // }
+    if (endPoint === 'endPoint') {
+      navigation.navigate(NavigationStrings.ENDPOINT, {id: uniqueId});
+    }
+
+    if (bridgeId != null || bridgeId != '') {
+      navigation.navigate(NavigationStrings.BRIDGE, {id: bridgeId});
+    }
+
+    if (stringID === 'roadUpdate') {
+      updateTrackData(
+        {
+          latitude: newCoordinates
+            ? newCoordinates?.latitude
+            : coordinates?.coords?.latitude,
+          longitude: newCoordinates
+            ? newCoordinates?.longitude
+            : coordinates?.coords?.longitude,
+        },
+        roadbibaranid,
+      ).then((res: any) => {
+        if (res?.success === true) {
+          toast.show(`${res?.message}`, {
+            type: 'success',
+            placement: 'bottom',
+          });
+        } else {
+          toast.show(`${res?.error}`, {
+            type: 'danger',
+            placement: 'bottom',
+          });
+        }
+      });
+      navigation.navigate(NavigationStrings.ROADBIBARAN);
+    }
   };
 
   //change the region and marker
@@ -246,13 +292,7 @@ const MapsComponent = () => {
               height: windowHeight > 600 ? '70%' : '40%',
             }}
             // initialRegion={newLat && newLong ? initialRegion2 : initialRegion}
-            initialRegion={
-              newLat && newLong
-                ? initialRegion2
-                : roadLat && roadLong
-                ? initialRegion3
-                : initialRegion
-            }
+            initialRegion={newLat && newLong ? initialRegion2 : initialRegion}
             loadingEnabled={true}
             onPress={e => {
               setMarker(e.nativeEvent.coordinate);
@@ -268,13 +308,7 @@ const MapsComponent = () => {
             ) : (
               <Marker
                 draggable
-                coordinate={
-                  newLat && newLong
-                    ? initialRegion2
-                    : roadLat && roadLong
-                    ? initialRegion3
-                    : initialRegion
-                }
+                coordinate={newLat && newLong ? initialRegion2 : initialRegion}
                 // coordinate={newLat && newLong ? initialRegion2 : initialRegion}
               />
             )}

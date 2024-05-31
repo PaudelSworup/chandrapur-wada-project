@@ -2,25 +2,25 @@ export const dropDownData = [
   {
     id: 1,
     label: 'one',
-    values: 'one',
+    values: '1',
   },
 
   {
     id: 2,
     label: 'two',
-    values: 'two',
+    values: '2',
   },
 
   {
     id: 3,
     label: 'three',
-    values: 'three',
+    values: '3',
   },
 
   {
     id: 4,
     label: 'four',
-    values: 'four',
+    values: '4',
   },
 ];
 
