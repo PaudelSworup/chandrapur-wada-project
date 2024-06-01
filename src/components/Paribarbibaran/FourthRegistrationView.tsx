@@ -127,7 +127,7 @@ const FourthRegistrationView = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={healthData ? healthData : dropDownData}
             maxHeight={300}
@@ -158,7 +158,7 @@ const FourthRegistrationView = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={educationData ? educationData : dropDownData}
             maxHeight={300}
@@ -189,7 +189,7 @@ const FourthRegistrationView = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={cookingSourceData ? cookingSourceData : dropDownData}
             maxHeight={300}
@@ -228,7 +228,7 @@ const FourthRegistrationView = ({
                     fontSize: 18,
                   }}
                   inputSearchStyle={styles.inputSearchStyle}
-                  selectedTextStyle={{color: 'black'}}
+                  selectedTextStyle={{color: 'black', paddingLeft: 11}}
                   iconStyle={styles.iconStyle}
                   data={vehicletypeData ? vehicletypeData : dropDownData}
                   maxHeight={300}
@@ -261,7 +261,7 @@ const FourthRegistrationView = ({
                     fontSize: 18,
                   }}
                   inputSearchStyle={styles.inputSearchStyle}
-                  selectedTextStyle={{color: 'black'}}
+                   selectedTextStyle={{color: 'black', paddingLeft: 11}}
                   iconStyle={styles.iconStyle}
                   data={vehicletypeData ? vehicletypeData : dropDownData}
                   maxHeight={300}
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    paddingLeft: 11,
     color: 'black',
   },
 

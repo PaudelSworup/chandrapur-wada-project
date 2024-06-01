@@ -49,33 +49,29 @@ type RoadBibaranParamList = {
 };
 
 const NewMap = () => {
-  const [roadCoordinates, setRoadCoordinates] = useState<any>();
-
-  const route = useRoute<RouteProp<RootStackParamList, 'uniqueKey'>>();
+  // const route = useRoute<RouteProp<RootStackParamList, 'uniqueKey'>>();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const houseRoute =
     useRoute<RouteProp<houseStackParamList, 'coordinatesKey'>>();
-  const {ids, latitude, longitude} = houseRoute.params;
-
+  const {latitude, longitude} = houseRoute.params;
   const newLat = latitude ? parseFloat(latitude.toString()) : 0;
   const newLong = longitude ? parseFloat(longitude.toString()) : 0;
 
   //road detail id
   const roadDetail = useRoute<RouteProp<RoadBibaranParamList, 'roadDetail'>>();
-  const {stringID, polygonID} = roadDetail.params;
-
-  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const {polygonID} = roadDetail.params;
 
   const mapRef = useRef<any>();
+  const [roadCoordinates, setRoadCoordinates] = useState<any>();
   const [coordinates, setCoordinates] = useState<any>();
   const [marker, setMarker] = useState<any>();
-  //   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
-  //   const [newCoordinates, setNewCoordinates] = useState<any>(null);
 
   const [backPressedOnce, setBackPressedOnce] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
+  //location premission service
   const locationService = useQuery(
     ['locationservice'],
     async () => requestLoacationPermission(),
@@ -103,53 +99,11 @@ const NewMap = () => {
     async () => getTrackDetail(polygonID),
     {
       onSettled: data => {
-        // console.log(data?.track);
+        console.log(data?.track);
         setRoadCoordinates(data?.track);
       },
     },
   );
-
-  const start = roadCoordinates?.find((point: any) => point.type === 'start');
-  const end = roadCoordinates?.find((point: any) => point.type === 'end');
-
-  const initialRegion = {
-    latitude: coordinates ? coordinates?.coords?.latitude : 0,
-    longitude: coordinates ? coordinates?.coords?.longitude : 0,
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.001,
-  };
-
-  const initialRegion2 = {
-    latitude: newLat,
-    longitude: newLong,
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.001,
-  };
-
-  const startRegion = {
-    latitude: start?.latitude ? parseFloat(start?.latitude.toString()) : 0,
-    longitude: start?.longitude ? parseFloat(start?.longitude.toString()) : 0,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
-  };
-
-  const endRegion = {
-    latitude: end?.latitude ? parseFloat(end?.latitude.toString()) : 0,
-    longitude: end?.longitude ? parseFloat(end?.longitude.toString()) : 0,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
-  };
-
-  const data = [
-    {
-      latitude: start?.latitude ? parseFloat(start?.latitude.toString()) : 0,
-      longitude: start?.longitude ? parseFloat(start?.longitude.toString()) : 0,
-    },
-    {
-      latitude: end?.latitude ? parseFloat(end?.latitude.toString()) : 0,
-      longitude: end?.longitude ? parseFloat(end?.longitude.toString()) : 0,
-    },
-  ];
 
   const currentPosition = useQuery(
     ['coordinates'],
@@ -185,8 +139,53 @@ const NewMap = () => {
     }, [handleBackPress]),
   );
 
+  const start = roadCoordinates?.find((point: any) => point.type === 'start');
+  const end = roadCoordinates?.find((point: any) => point.type === 'end');
+
+  const initialRegion = {
+    latitude: coordinates ? coordinates?.coords?.latitude : 0,
+    longitude: coordinates ? coordinates?.coords?.longitude : 0,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  };
+
+  const initialRegion2 = {
+    latitude: newLat,
+    longitude: newLong,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  };
+
+  const startRegion = {
+    latitude: start?.latitude ? parseFloat(start?.latitude.toString()) : 0,
+    longitude: start?.longitude ? parseFloat(start?.longitude.toString()) : 0,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  };
+
+  const endRegion = {
+    latitude: end?.latitude ? parseFloat(end?.latitude.toString()) : 0,
+    longitude: end?.longitude ? parseFloat(end?.longitude.toString()) : 0,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  };
+
   const isValidRegion = (region: any) =>
     region.latitude !== 0 && region.longitude !== 0;
+
+  const determineInitialRegion = () => {
+    if (isValidRegion(startRegion)) {
+      return startRegion;
+    } else if (isValidRegion(initialRegion2)) {
+      return initialRegion2;
+    } else if (isValidRegion(initialRegion)) {
+      return initialRegion;
+    } else {
+      return initialRegion;
+    }
+  };
+
+  const selectedInitialRegion = determineInitialRegion();
 
   return (
     <>
@@ -200,8 +199,7 @@ const NewMap = () => {
               width: '100%',
               height: windowHeight > 600 ? '100%' : '40%',
             }}
-            // initialRegion={ initialRegion}
-            initialRegion={initialRegion ? initialRegion : initialRegion2}
+            initialRegion={selectedInitialRegion}
             loadingEnabled={true}
             onPress={e => {
               setMarker(e.nativeEvent.coordinate);
@@ -241,10 +239,7 @@ const NewMap = () => {
             {marker != null ? (
               <Marker draggable coordinate={marker} />
             ) : (
-              <Marker
-                draggable
-                coordinate={startRegion ? startRegion : initialRegion2}
-              />
+              <Marker draggable coordinate={selectedInitialRegion} />
             )}
           </MapView>
 

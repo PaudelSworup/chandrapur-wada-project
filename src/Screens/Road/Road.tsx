@@ -12,9 +12,14 @@ import {
 import {addRoadDetail, postTrack} from '../../APIS/API/api';
 import {useToast} from 'react-native-toast-notifications';
 import {useMutation} from 'react-query';
+import {useDispatch} from 'react-redux';
+import {setFirstCoordinate} from '../../store/coordinateSlice';
 
 const Road = () => {
   const toast = useToast();
+
+  const dispatch = useDispatch();
+
   const {longitude, lattitude} = useAppSelector(state => state.coordinates);
 
   const mutation = useMutation<any, any, any>({
@@ -22,19 +27,12 @@ const Road = () => {
     onSuccess: data => {
       if (data?.success === true) {
         toast.show(data?.message, {type: 'success', placement: 'bottom'});
-        // postTrack({
-        //   latitude: lattitude,
-        //   longitude: longitude,
-        //   type: 'track',
-        //   roadId: data?.optional.id,
-        // });
-        // .then(res => {
-        //   if (res === true) {
-        //     toast.show(res?.message, {type: 'success', placement: 'bottom'});
-        //   } else {
-        //     toast.show(res?.error, {type: 'danger', placement: 'bottom'});
-        //   }
-        // });
+        postTrack({
+          latitude: lattitude,
+          longitude: longitude,
+          type: 'track',
+          roadId: data?.optional.id,
+        });
       } else {
         toast.show(data?.error || 'Error occurred', {
           type: 'danger',
@@ -55,13 +53,15 @@ const Road = () => {
           }}
           validationSchema={roadValidationSchema}
           onSubmit={(values: any, {resetForm}) => {
+            console.log(values.startLatitude);
+
             // console.log(values);
             const roadData = {
               nameNep: values.nameNepali,
               nameEng: values.nameEng,
               startLandmark: values.startLandmark,
-              latitude: values.startLatitude,
-              longitude: values.startLongitude,
+              latitude: lattitude.toString(),
+              longitude: longitude.toString(),
               currentPurposeWidth: values.currentPurposeWidth,
               futurePurposeWidth: values.FuturePuropseWidth,
               startWard: values.startWardDropDown,
@@ -74,6 +74,13 @@ const Road = () => {
 
             mutation.mutate(roadData, {
               onSuccess: () => {
+                dispatch(
+                  setFirstCoordinate({
+                    lattitude: 0,
+                    longitude: 0,
+                    coordinateType: 'one',
+                  }),
+                );
                 resetForm();
               },
             });

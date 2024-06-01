@@ -163,7 +163,7 @@ const SecondRegistrationView = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={ltdData ? ltdData : dropDownData}
             maxHeight={300}
@@ -210,7 +210,7 @@ const SecondRegistrationView = ({
               fontSize: 18,
             }}
             placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={disabilityData ? disabilityData : dropDownData}
@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    paddingLeft: 11,
     color: 'black',
   },
 

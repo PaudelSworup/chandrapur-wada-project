@@ -181,7 +181,7 @@ const EndPoint: React.FC<{
             color: 'black',
             fontSize: 18,
           }}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={startWardDropDownData ? startWardDropDownData : dropDownData}
@@ -217,7 +217,7 @@ const EndPoint: React.FC<{
             color: 'black',
             fontSize: 18,
           }}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={startToleDropDownData ? startToleDropDownData : dropDownData}
@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     color: 'black',
+    paddingLeft: 11,
     fontSize: 16,
   },
   selectedTextStyle: {

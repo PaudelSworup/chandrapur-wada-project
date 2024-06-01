@@ -11,9 +11,14 @@ import {updateRoadData} from '../../APIS/API/api';
 import {useToast} from 'react-native-toast-notifications';
 import EndPoint from '../../components/Road/EndPoint';
 import {RouteProp, useRoute} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {setFirstCoordinate} from '../../store/coordinateSlice';
 
 const EndPointMain = () => {
   const toast = useToast();
+
+  const dispatch = useDispatch();
+
   const {longitude, lattitude} = useAppSelector(state => state.coordinates);
 
   type paramId = {
@@ -39,8 +44,8 @@ const EndPointMain = () => {
           // console.log(values);
           const roadData = {
             endLandmark: values.endLandmark,
-            latitude: values.endLatitude,
-            longitude: values.endLongitude,
+            latitude: lattitude.toString(),
+            longitude: longitude.toString(),
             endWard: values.endWardDropDown,
             endTole: values.endToleDropDown,
             type: 'end',
@@ -49,6 +54,13 @@ const EndPointMain = () => {
           updateRoadData(roadData, id as number).then(data => {
             if (data?.success === true) {
               toast.show(data?.message, {type: 'success', placement: 'bottom'});
+              dispatch(
+                setFirstCoordinate({
+                  lattitude: 0,
+                  longitude: 0,
+                  coordinateType: 'one',
+                }),
+              );
               resetForm();
             } else {
               toast.show(data?.error || 'Error occurred', {
@@ -57,15 +69,6 @@ const EndPointMain = () => {
               });
             }
           });
-          // postTrack()
-          //   mutation.mutate(
-          //     {id: id!, roadData},
-          //     {
-          //       onSuccess: () => {
-          //         resetForm();
-          //       },
-          //     },
-          //   );
         }}>
         {({values, errors, handleChange, handleSubmit}) => (
           <EndPoint

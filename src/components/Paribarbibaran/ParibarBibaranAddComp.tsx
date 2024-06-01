@@ -20,8 +20,12 @@ import {useFocusEffect} from '@react-navigation/native';
 import {addFamilyData} from '../../APIS/API/api';
 import {useToast} from 'react-native-toast-notifications';
 import {useAppSelector} from '../../store/store';
+import {useDispatch} from 'react-redux';
+import {setFirstCoordinate} from '../../store/coordinateSlice';
 const ParibarBibaranAddComp = () => {
   const toast = useToast();
+
+  const dispatch = useDispatch();
 
   const {id} = useAppSelector((state: any) => state.users);
 
@@ -194,6 +198,13 @@ const ParibarBibaranAddComp = () => {
               placement: 'bottom',
             });
 
+            dispatch(
+              setFirstCoordinate({
+                lattitude: 0,
+                longitude: 0,
+                coordinateType: 'one',
+              }),
+            );
             resetForm();
           } else {
             toast.show(`${res?.error}`, {

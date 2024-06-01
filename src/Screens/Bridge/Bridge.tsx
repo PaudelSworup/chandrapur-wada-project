@@ -12,9 +12,12 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {useMutation} from 'react-query';
 import {addBridgeData} from '../../APIS/API/api';
 import {useToast} from 'react-native-toast-notifications';
+import {useDispatch} from 'react-redux';
+import {setFirstCoordinate} from '../../store/coordinateSlice';
 
 const Bridge = () => {
   const toast = useToast();
+  const dispatch = useDispatch();
   const {longitude, lattitude} = useAppSelector(state => state.coordinates);
 
   type paramId = {
@@ -26,7 +29,7 @@ const Bridge = () => {
   const route = useRoute<RouteProp<paramId, 'bridgeId'>>();
   const {id} = route.params;
 
-  //mutation of post function to add bridge data
+  //mutation or post function to add bridge data
   const mutation = useMutation<any, any, any>({
     mutationFn: addBridgeData,
     onSuccess: data => {
@@ -52,13 +55,11 @@ const Bridge = () => {
             }}
             validationSchema={bridgeValidationSchema}
             onSubmit={(values, {resetForm}) => {
-              //   return console.log(values);
-              //do this after successfully submission of the data
               const bridgeData = {
                 bridgeName: values.bridgeName,
                 bridgeNameNepali: values.bridgeNepaliName,
-                centerLongitude: values.centerLongitude,
-                centerLatitude: values.centerLatitude,
+                centerLongitude: longitude.toString(),
+                centerLatitude: lattitude.toString(),
                 length: values.length,
                 width: values.width,
                 remarks: values.remarks,
@@ -67,10 +68,15 @@ const Bridge = () => {
                 roadId: id,
               };
 
-              // postTrack()
-
               mutation.mutate(bridgeData, {
                 onSuccess: () => {
+                  dispatch(
+                    setFirstCoordinate({
+                      lattitude: 0,
+                      longitude: 0,
+                      coordinateType: 'one',
+                    }),
+                  );
                   resetForm();
                 },
               });

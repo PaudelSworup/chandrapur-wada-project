@@ -9,6 +9,8 @@ import {
 import {addHouseData} from '../../APIS/API/api';
 import {useToast} from 'react-native-toast-notifications';
 import {useAppSelector} from '../../store/store';
+import {useDispatch} from 'react-redux';
+import {setFirstCoordinate} from '../../store/coordinateSlice';
 
 const GharbibaranAdd = () => {
   const {longitude, lattitude} = useAppSelector(
@@ -17,6 +19,7 @@ const GharbibaranAdd = () => {
   console.log(longitude, lattitude);
   const {id} = useAppSelector((state: any) => state.users);
   const toast = useToast();
+  const dispatch = useDispatch();
   return (
     <SafeAreaView>
       <ScrollView className="bg-[#fff] h-full">
@@ -62,6 +65,13 @@ const GharbibaranAdd = () => {
                     type: 'success',
                     placement: 'bottom',
                   });
+                  dispatch(
+                    setFirstCoordinate({
+                      lattitude: 0,
+                      longitude: 0,
+                      coordinateType: 'one',
+                    }),
+                  );
                   resetForm();
                 } else {
                   toast.show(res?.error, {

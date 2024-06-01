@@ -29,7 +29,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {requestLoacationPermission} from '../../APIS/AppApi/api';
 import NavigationStrings from '../../Constant/NavigationStrings';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {getTrackDetail, postTrack} from '../../APIS/API/api';
+import {getTrackDetail, postTrack, updateTrackData} from '../../APIS/API/api';
 import {Polyline} from 'react-native-maps';
 
 type RootStackParamList = {
@@ -131,8 +131,6 @@ const MapsComponent = () => {
     );
   };
 
-  
-
   const initialRegion = {
     latitude: coordinates ? coordinates?.coords?.latitude : 0,
     longitude: coordinates ? coordinates?.coords?.longitude : 0,
@@ -201,17 +199,17 @@ const MapsComponent = () => {
     }
 
     if (stringID === 'roadUpdate') {
-      postTrack({
-        latitude: newCoordinates
-          ? newCoordinates?.latitude
-          : coordinates?.coords?.latitude,
-        longitude: newCoordinates
-          ? newCoordinates?.longitude
-          : coordinates?.coords?.longitude,
-
-        type: 'track',
-        roadId: roadbibaranid,
-      }).then((res: any) => {
+      updateTrackData(
+        {
+          latitude: newCoordinates
+            ? newCoordinates?.latitude
+            : coordinates?.coords?.latitude,
+          longitude: newCoordinates
+            ? newCoordinates?.longitude
+            : coordinates?.coords?.longitude,
+        },
+        roadbibaranid,
+      ).then((res: any) => {
         if (res?.success === true) {
           toast.show(`${res?.message}`, {
             type: 'success',
@@ -293,9 +291,7 @@ const MapsComponent = () => {
               setMarker(e.nativeEvent.coordinate);
               setNewCoordinates(e.nativeEvent.coordinate);
               console.log(e.nativeEvent.coordinate);
-              // dispatch(setFirstCoordinate({
-
-              // }))
+             
             }}
             showsCompass>
             {marker != null ? (
@@ -304,7 +300,6 @@ const MapsComponent = () => {
               <Marker
                 draggable
                 coordinate={initialRegion}
-                // coordinate={newLat && newLong ? initialRegion2 : initialRegion}
               />
             )}
           </MapView>

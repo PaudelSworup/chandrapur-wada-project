@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView, FlatList} from 'react-native';
+import {View, Text, SafeAreaView, FlatList, Image} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {ActivityIndicator, Button} from 'react-native-paper';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
@@ -7,6 +7,13 @@ import NavigationStrings from '../../Constant/NavigationStrings';
 import {getRoadData} from '../../APIS/API/api';
 import {useQuery, useQueryClient} from 'react-query';
 import {TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 const RoadBibaranComp = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -70,6 +77,122 @@ const RoadBibaranComp = () => {
       setCurrentPage(prevPage => prevPage - 1);
     }
   };
+
+  const renderItemTwo = useCallback(
+    ({item, index}: any) => (
+      <TouchableOpacity
+        key={index}
+        onPress={() =>
+          navigation.navigate(NavigationStrings.ROADDETAIL, {id: item.id})
+        }>
+        <View
+          className="mx-4 px-3 py-2 mt-4 rounded-2xl bg-white "
+          style={{elevation: 10}}>
+          <View className="flex-row justify-between">
+            <View>
+              <View className="flex-row  gap-3 items-center">
+                <Image
+                  source={{
+                    uri: 'https://img.freepik.com/free-photo/minimalist-photorealistic-road_23-2150953081.jpg',
+                  }}
+                  alt=""
+                  className="w-14 h-14 rounded-full"
+                />
+
+                <View>
+                  <Text className="text-xl text-black font-bold">
+                    {item.nameEng}
+                  </Text>
+                  <Text className="text-lg text-black font-light">
+                    {item?.nameNep}
+                  </Text>
+                </View>
+              </View>
+
+              <View className="flex-row mt-4 space-x-2">
+                <View>
+                  <Text className="text-lg text-black font-semibold">
+                    {item?.startLandmark}
+                  </Text>
+                  <Text className="text-base text-black font-extralight">
+                    सुरु स्थलचिन्ह
+                  </Text>
+                </View>
+
+                <View>
+                  <Text className="text-lg text-black font-semibold">
+                    {item?.currentPurposeWidth}
+                  </Text>
+                  <Text className="text-base text-black font-extralight">
+                    हालको उद्देश्य चौडाइ
+                  </Text>
+                </View>
+
+                <View>
+                  <Text className="text-lg text-black font-semibold">
+                    {item?.futurePurposeWidth}
+                  </Text>
+                  <Text className="text-base text-black font-extralight">
+                    सुरु स्थलचिन्ह
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View>
+              <Menu>
+                <MenuTrigger>
+                  <Icon name="dots-horizontal" size={30} color="#900" />
+                </MenuTrigger>
+                {/* <MenuTrigger text="..." style={{backgroundColor: 'black'}} /> */}
+                <MenuOptions>
+                  <MenuOption
+                    onSelect={() =>
+                      navigation.navigate(NavigationStrings.MAPS, {
+                        stringID: 'roadUpdate',
+                        roadbibaranid: item?.id,
+                      })
+                    }
+                    text="Add Track"
+                    customStyles={{
+                      optionWrapper: {padding: 5},
+                      optionText: {color: 'black', fontSize: 16},
+                    }}
+                  />
+                  <MenuOption
+                    onSelect={() =>
+                      navigation.navigate(NavigationStrings.BRIDGE, {
+                        id: item.id,
+                      })
+                    }
+                    text="Add bridge"
+                    customStyles={{
+                      optionWrapper: {padding: 5},
+                      optionText: {color: 'black', fontSize: 16},
+                    }}
+                  />
+                  <MenuOption
+                    onSelect={() =>
+                      navigation.navigate(NavigationStrings.NEWMAP, {
+                        stringID: 'polygon',
+                        polygonID: item?.id,
+                      })
+                    }
+                    text="View Road"
+                    customStyles={{
+                      optionWrapper: {padding: 5},
+                      optionText: {color: 'black', fontSize: 16},
+                    }}
+                  />
+                </MenuOptions>
+              </Menu>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    ),
+    [],
+  );
 
   const renderItem = useCallback(
     ({item, index}: any) => (
@@ -192,7 +315,8 @@ const RoadBibaranComp = () => {
         initialNumToRender={6}
         maxToRenderPerBatch={10}
         data={roadData}
-        renderItem={renderItem}
+        // renderItem={renderItem}
+        renderItem={renderItemTwo}
         keyExtractor={item => item?.id.toString()}
       />
 

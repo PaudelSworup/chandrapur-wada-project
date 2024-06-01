@@ -243,7 +243,7 @@ const GharbibaranAddComponent = ({
             color: 'black',
             fontSize: 18,
           }}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={genderCat ? genderCat : dropDownData}
@@ -324,7 +324,7 @@ const GharbibaranAddComponent = ({
             color: 'black',
             fontSize: 18,
           }}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={houseData ? houseData : dropDownData}
@@ -352,7 +352,7 @@ const GharbibaranAddComponent = ({
           }}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           data={houseCategory ? houseCategory : dropDownData}
           maxHeight={300}
           labelField="label"
@@ -379,7 +379,7 @@ const GharbibaranAddComponent = ({
             fontSize: 18,
           }}
           inputSearchStyle={styles.inputSearchStyle}
-          selectedTextStyle={{color: 'black'}}
+           selectedTextStyle={{color: 'black', paddingLeft: 11}}
           iconStyle={styles.iconStyle}
           data={rentCat ? rentCat : dropDownData}
           maxHeight={300}
@@ -461,7 +461,7 @@ const GharbibaranAddComponent = ({
             fontSize: 18,
           }}
           inputSearchStyle={styles.inputSearchStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           iconStyle={styles.iconStyle}
           data={wadaData ? wadaData : dropDownData}
           maxHeight={300}
@@ -488,7 +488,7 @@ const GharbibaranAddComponent = ({
             fontSize: 18,
           }}
           inputSearchStyle={styles.inputSearchStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           iconStyle={styles.iconStyle}
           data={toleData ? toleData : dropDownData}
           maxHeight={300}
@@ -526,7 +526,7 @@ const GharbibaranAddComponent = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={bathroomData ? bathroomData : dropDownData}
             maxHeight={400}
@@ -557,7 +557,7 @@ const GharbibaranAddComponent = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={waterData ? waterData : dropDownData}
             maxHeight={400}
@@ -582,7 +582,7 @@ const GharbibaranAddComponent = ({
               },
             ]}
             placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             itemTextStyle={{
               backgroundColor: '#fff',
               color: 'black',
@@ -613,7 +613,7 @@ const GharbibaranAddComponent = ({
               },
             ]}
             placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             itemTextStyle={{
               backgroundColor: '#fff',
               color: 'black',
@@ -644,7 +644,7 @@ const GharbibaranAddComponent = ({
               },
             ]}
             placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             itemTextStyle={{
               backgroundColor: '#fff',
               color: 'black',
@@ -675,7 +675,7 @@ const GharbibaranAddComponent = ({
               },
             ]}
             placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             itemTextStyle={{
               backgroundColor: '#fff',
               color: 'black',
@@ -712,7 +712,7 @@ const GharbibaranAddComponent = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={internetData ? internetData : dropDownData}
             maxHeight={300}
@@ -743,7 +743,7 @@ const GharbibaranAddComponent = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={pvData ? pvData : dropDownData}
             maxHeight={300}
@@ -774,7 +774,7 @@ const GharbibaranAddComponent = ({
               fontSize: 18,
             }}
             inputSearchStyle={styles.inputSearchStyle}
-            selectedTextStyle={{color: 'black'}}
+             selectedTextStyle={{color: 'black', paddingLeft: 11}}
             iconStyle={styles.iconStyle}
             data={cookingSourceData ? cookingSourceData : dropDownData}
             maxHeight={400}
@@ -845,6 +845,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    paddingLeft: 11,
     color: 'black',
   },
 

@@ -173,7 +173,7 @@ const ThirdRegistrationView = ({handleChange, values, errors}: any) => {
               },
             ]}
             placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={{color: 'black'}}
+            selectedTextStyle={{color: 'black', paddingLeft: 11}}
             itemTextStyle={{
               backgroundColor: '#fff',
               color: 'black',
@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    paddingLeft: 11,
     color: 'black',
   },
 

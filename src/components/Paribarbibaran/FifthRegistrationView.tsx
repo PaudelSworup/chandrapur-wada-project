@@ -60,7 +60,7 @@ const FifthRegistrationView = ({
             fontSize: 18,
           }}
           inputSearchStyle={styles.inputSearchStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           iconStyle={styles.iconStyle}
           data={wasteData ? wasteData : dropDownData}
           maxHeight={300}
@@ -91,7 +91,7 @@ const FifthRegistrationView = ({
             fontSize: 18,
           }}
           inputSearchStyle={styles.inputSearchStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           iconStyle={styles.iconStyle}
           data={agricultureData ? agricultureData : dropDownData}
           maxHeight={300}
@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    paddingLeft: 11,
     color: 'black',
   },
 

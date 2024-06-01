@@ -93,6 +93,7 @@ const FirstRegistrationView = ({handleChange, values, errors}: any) => {
 
   return (
     <>
+      <Text className="text-lg text-black">घर सम्बन्धी विवरण भर्नुहोस </Text>
       <View className="mb-4">
         <TextInput
           mode="outlined"
@@ -133,7 +134,7 @@ const FirstRegistrationView = ({handleChange, values, errors}: any) => {
             color: 'black',
             fontSize: 18,
           }}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={genderCat ? genderCat : dropDownData}
@@ -159,7 +160,7 @@ const FirstRegistrationView = ({handleChange, values, errors}: any) => {
             color: 'black',
             fontSize: 18,
           }}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={rentData ? rentData : dropDownData}
@@ -239,7 +240,7 @@ const FirstRegistrationView = ({handleChange, values, errors}: any) => {
             fontSize: 18,
           }}
           inputSearchStyle={styles.inputSearchStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           iconStyle={styles.iconStyle}
           data={languageData ? languageData : dropDownData}
           maxHeight={300}
@@ -266,7 +267,7 @@ const FirstRegistrationView = ({handleChange, values, errors}: any) => {
             fontSize: 18,
           }}
           inputSearchStyle={styles.inputSearchStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           iconStyle={styles.iconStyle}
           data={CasteData ? CasteData : dropDownData}
           maxHeight={300}
@@ -293,7 +294,7 @@ const FirstRegistrationView = ({handleChange, values, errors}: any) => {
             fontSize: 18,
           }}
           inputSearchStyle={styles.inputSearchStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           iconStyle={styles.iconStyle}
           data={religionData ? religionData : dropDownData}
           maxHeight={300}
@@ -333,7 +334,7 @@ const FirstRegistrationView = ({handleChange, values, errors}: any) => {
             fontSize: 18,
           }}
           placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={{color: 'black'}}
+          selectedTextStyle={{color: 'black', paddingLeft: 11}}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           data={districtsData ? districtsData : dropDownData}
@@ -426,6 +427,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    paddingLeft: 11,
     color: 'black',
   },
 
