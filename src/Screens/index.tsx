@@ -26,3 +26,4 @@ export {default as EndPointMain} from './Road/EndPointMain';
 export {default as Bridge} from './Bridge/Bridge';
 export {default as BridgeBibaran} from './Bridge/BridgeBibaran';
 export {default as BridgeDetail} from './Bridge/BridgeDetail';
+export {default as NewMap} from './Map/NewMaps';

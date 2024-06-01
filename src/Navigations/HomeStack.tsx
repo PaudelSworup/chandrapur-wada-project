@@ -12,6 +12,7 @@ import {
   EndPointMain,
   Bridge,
   BridgeDetail,
+  NewMap,
 } from '../Screens';
 import DrawerStack from './DrawerStack';
 import {Image, StyleSheet, Text} from 'react-native';
@@ -117,6 +118,16 @@ const HomeStack = () => {
       <Stack.Screen
         name={NavigationStrings.BRIDGEDETAIL}
         component={BridgeDetail}
+        options={({navigation}) => ({
+          headerTitleAlign: 'center',
+          headerShown: true,
+          headerTitle: headerTitleComponent,
+        })}
+      />
+
+      <Stack.Screen
+        name={NavigationStrings.NEWMAP}
+        component={NewMap}
         options={({navigation}) => ({
           headerTitleAlign: 'center',
           headerShown: true,

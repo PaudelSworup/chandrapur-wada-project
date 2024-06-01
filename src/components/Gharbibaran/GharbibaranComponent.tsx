@@ -139,8 +139,16 @@ const GharbibaranComponent = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
+              // onPress={() =>
+              //   navigation.navigate(NavigationStrings.MAPS, {
+              //     ids: 'housebibaran',
+              //     latitude: item.latitude,
+              //     longitude: item.longitude,
+              //   })
+              // }
+
               onPress={() =>
-                navigation.navigate(NavigationStrings.MAPS, {
+                navigation.navigate(NavigationStrings.NEWMAP, {
                   ids: 'housebibaran',
                   latitude: item.latitude,
                   longitude: item.longitude,
@@ -243,8 +251,6 @@ const GharbibaranComponent = () => {
           <Text className="text-[#fff]">थप</Text>
         </Button>
       </View>
-
-      
 
       <FlatList
         removeClippedSubviews={true}

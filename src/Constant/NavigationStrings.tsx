@@ -29,4 +29,5 @@ export default {
   BRIDGE: 'BRIDGE',
   BRIDGEBIBARAN: 'पुलको विवरण',
   BRIDGEDETAIL: 'BRIDGEDETAIL',
+  NEWMAP: 'NEWMAP',
 };

@@ -132,7 +132,10 @@ const BridgeComp = ({
       <TouchableOpacity
         className="mb-1 px-2"
         onPress={() =>
-          navigation.navigate(NavigationStrings.MAPS, {bridgeId: id})
+          navigation.navigate(NavigationStrings.MAPS, {
+            bridgeId: id,
+            bridgeStringId: 'bridge',
+          })
         }>
         <Text className=" text-right text-blue-600 text-[16px]">
           set your location

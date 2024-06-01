@@ -458,6 +458,15 @@ export const postTrack = async (data: any) => {
   }
 };
 
+export const getTrackDetail = async (id: number) => {
+  try {
+    const data = await fetch(`${API}/track/detail/${id}`);
+    return data.json();
+  } catch (err: any) {
+    return console.log(err);
+  }
+};
+
 export const updateRoadData = async (data: any, id: number) => {
   try {
     return await fetch(`${API}/road/update/${id}`, {

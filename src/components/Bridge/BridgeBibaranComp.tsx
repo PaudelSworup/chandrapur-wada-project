@@ -7,7 +7,6 @@ import NavigationStrings from '../../Constant/NavigationStrings';
 import {getBridgeData} from '../../APIS/API/api';
 import {useQuery} from 'react-query';
 import {TouchableOpacity} from 'react-native';
-import {useToast} from 'react-native-toast-notifications';
 
 const BridgeBibaranComp = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -59,6 +58,13 @@ const BridgeBibaranComp = () => {
         <View className="p-5 flex-row justify-between flex-wrap">
           <Text className="text-black text-xl">पुलको विवरण</Text>
 
+          {/* <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(NavigationStrings.MAPS, {bridgeID: item.id})
+            }>
+            <Text className="text-black text-base underline">View bridge</Text>
+          </TouchableOpacity> */}
+
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(NavigationStrings.BRIDGEDETAIL, {id: item.id})
@@ -87,16 +93,6 @@ const BridgeBibaranComp = () => {
               {item?.centerLatitude}
             </Text>
           </View>
-
-          {/* <View className="flex-row items-center space-x-1">
-            <Text className="text-black text-base">लम्बाइ</Text>
-            <Text className="text-black text-base ">{item?.length}</Text>
-          </View>
-
-          <View className="flex-row items-center space-x-1">
-            <Text className="text-black text-base">चौडाइ</Text>
-            <Text className="text-black text-base ">{item?.width}</Text>
-          </View> */}
         </View>
       </View>
     ),
@@ -126,11 +122,6 @@ const BridgeBibaranComp = () => {
 
       <View className={`flex-row m-5 justify-between`}>
         <Text className="text-black text-2xl">पुलको विवरण</Text>
-        <Button
-          className="bg-[#4dace0] px-4"
-          onPress={() => navigation.navigate(NavigationStrings.ROADBIBARAN)}>
-          <Text className="text-[#fff]">थप</Text>
-        </Button>
       </View>
 
       <FlatList

@@ -109,7 +109,18 @@ const RoadBibaranComp = () => {
               }>
               <Text className="text-black text-base underline">Add bridge</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(NavigationStrings.NEWMAP, {
+                  stringID: 'polygon',
+                  polygonID: item?.id,
+                })
+              }>
+              <Text className="text-black text-base underline">View Road</Text>
+            </TouchableOpacity>
           </View>
+
           <View className="flex-row justify-between flex-wrap gap-4 p-5">
             <View className="flex-row  space-x-1">
               <Text className="text-black text-base">नाम:</Text>
