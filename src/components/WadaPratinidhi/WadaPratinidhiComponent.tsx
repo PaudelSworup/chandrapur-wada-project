@@ -4,13 +4,15 @@ import {Image} from 'react-native';
 
 const WadaPratinidhiComponent = () => {
   return (
-    <SafeAreaView className="bg-[#f1eded] h-full">
+    <SafeAreaView className="h-full  bg-[#f1eded]">
+      {/* <ScrollView> */}
+
+      <View className={`flex-row m-5 justify-between`}>
+        <Text className="text-black text-2xl">वडा जनप्रतिनिधिहरु</Text>
+      </View>
+
       <ScrollView>
         <View className="mx-2">
-          <View>
-            <Text className="text-2xl text-black">वडा जनप्रतिनिधिहरु</Text>
-          </View>
-
           <View className="justify-center items-center mt-5 mb-4">
             <View className=" rounded-lg " style={{elevation: 4}}>
               <Image

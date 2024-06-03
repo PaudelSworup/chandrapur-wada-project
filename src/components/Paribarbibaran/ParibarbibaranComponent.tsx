@@ -11,16 +11,22 @@ import {StyleSheet} from 'react-native';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import NavigationStrings from '../../Constant/NavigationStrings';
-import {useQuery, useQueryClient} from 'react-query';
-import {getAllFamilyAll, getAllFamilyData} from '../../APIS/API/api';
+import {useQuery} from 'react-query';
+import {getAllFamilyData} from '../../APIS/API/api';
 import {FlatList} from 'react-native-gesture-handler';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Image} from 'react-native';
 
 const ParibarbibaranComponent = () => {
-  const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [familyData, setFamilyData] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const [totalCount, setTotalCount] = useState<number>(1);
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const {data, isLoading} = useQuery(
@@ -50,71 +56,297 @@ const ParibarbibaranComponent = () => {
     }
   };
 
+  // const renderItemTwo = useCallback(
+  //   ({item, index}: any) => (
+  //     // <TouchableHighlight
+  //     //   key={index}
+  //     //   onPress={() =>
+  //     //     navigation.navigate(NavigationStrings.GHRDETAIL, {id: item.id})
+  //     //   }>
+  //     <View
+  //       className="mx-4 px-3 py-2 mt-4 rounded-2xl bg-white"
+  //       style={{elevation: 10}}>
+  //       <View className="flex-row justify-between">
+  //         <View>
+  //           <View className="flex-row  gap-3 items-center">
+  //             <Image
+  //               source={{
+  //                 uri: 'https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg',
+  //               }}
+  //               alt=""
+  //               className="w-14 h-14 rounded-full"
+  //             />
+
+  //             <View>
+  //               <Text className="text-xl text-black font-bold">
+  //                 पारिवारिक विवरण
+  //                 {/* {item.nameEng} */}
+  //               </Text>
+  //               <Text className="text-lg text-black font-light">
+  //                 {item.FamilyOwner.ownerNameNp}
+  //                 {/* {item?.nameNep} */}
+  //               </Text>
+  //             </View>
+  //           </View>
+
+  //           <View className="flex-row mt-4 space-x-2">
+  //             <View>
+  //               <Text className="text-lg text-black font-semibold">
+  //                 {item?.House.id}
+  //               </Text>
+  //               <Text className="text-base text-black font-extralight">
+  //                 घर नं
+  //               </Text>
+  //             </View>
+
+  //             <View>
+  //               <Text className="text-lg text-black font-semibold">
+  //                 {item.FamilyOwner.phone}
+  //               </Text>
+  //               <Text className="text-base text-black font-extralight">
+  //                 फोन नं
+  //               </Text>
+  //             </View>
+
+  //             <View>
+  //               <Text className="text-lg text-black font-semibold">
+  //                 {item.FamilyPopulation.memberNo}
+  //               </Text>
+  //               <Text className="text-base text-black font-extralight">
+  //                 परिवार संख्या
+  //               </Text>
+  //             </View>
+  //           </View>
+  //         </View>
+
+  //         <View>
+  //           <Menu>
+  //             <MenuTrigger>
+  //               <Icon name="dots-horizontal" size={30} color="#900" />
+  //             </MenuTrigger>
+  //             <MenuOptions>
+  //               <MenuOption
+  //                 // onSelect={() => uploadHouseImage(item.id)}
+  //                 text="upload Image"
+  //                 customStyles={{
+  //                   optionWrapper: {padding: 5},
+  //                   optionText: {color: 'black', fontSize: 16},
+  //                 }}
+  //               />
+  //               <MenuOption
+  //                 onSelect={() =>
+  //                   navigation.navigate(NavigationStrings.NEWMAP, {
+  //                     ids: 'housebibaran',
+  //                     latitude: item.latitude,
+  //                     longitude: item.longitude,
+  //                   })
+  //                 }
+  //                 text="View in Map"
+  //                 customStyles={{
+  //                   optionWrapper: {padding: 5},
+  //                   optionText: {color: 'black', fontSize: 16},
+  //                 }}
+  //               />
+
+  //               <MenuOption
+  //                 onSelect={() =>
+  //                   navigation.navigate(NavigationStrings.GHRDETAIL, {
+  //                     id: item.id,
+  //                   })
+  //                 }
+  //                 text="View Detail"
+  //                 customStyles={{
+  //                   optionWrapper: {padding: 5},
+  //                   optionText: {color: 'black', fontSize: 16},
+  //                 }}
+  //               />
+  //             </MenuOptions>
+  //           </Menu>
+  //         </View>
+  //       </View>
+  //     </View>
+  //     // </TouchableHighlight>
+  //   ),
+  //   [],
+  // );
+
   const ListItem = React.memo(({item, index}: any) => (
     <View
       key={index}
-      className="mx-5 rounded-md mt-4 py-3 bg-white"
-      style={{elevation: 10, padding: 10}}>
-      <View className="flex-row justify-between mx-6">
-        <Text className="text-black text-lg font-bold">
-          {item.FamilyOwner.ownerNameNp}
-          {/* {item.FamilyOwner.ownerNameNp} */}
-        </Text>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate(NavigationStrings.PARIBARDETAIL, {id: item.id})
-          }>
-          <Text className="text-black text-sm underline font-bold">View</Text>
-        </TouchableOpacity>
-      </View>
-      <View className="flex-row flex-wrap  gap-8 p-5">
-        <View className="flex-row items-center space-x-1">
-          <Text className="text-black text-sm">क्र.स.</Text>
-          <Text className="text-black text-sm ">
-            {item.id}
-            {/* {item.id} */}
-          </Text>
-        </View>
+      className="mx-4 px-3 py-2 mt-4 rounded-2xl bg-white"
+      style={{elevation: 10}}>
+      <View className="flex-row justify-between">
+        <View>
+          <View className="flex-row  gap-3 items-center">
+            <Image
+              source={{
+                uri: 'https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg',
+              }}
+              alt=""
+              className="w-14 h-14 rounded-full"
+            />
 
-        <View className="flex-row items-center space-x-1">
-          <Text className="text-black text-sm">घर नं:</Text>
-          <Text className="text-black ">{item.House.id}</Text>
-        </View>
-
-        <View className="flex-row items-center space-x-1">
-          <Text className="text-black text-sm">फोन नं :</Text>
-          <Text className="text-black text-sm">{item.FamilyOwner.phone}</Text>
-        </View>
-        <View className="flex-row items-center space-x-1">
-          <Text className="text-black text-sm">परिवार संख्या:</Text>
-          <Text className="text-black text-sm ">
-            {item.FamilyPopulation.memberNo}
-          </Text>
-        </View>
-        <View className="flex-row items-center space-x-1">
-          <Text className="text-black text-sm">पुरुष:</Text>
-          <Text className="text-black text-sm ">
-            {item.FamilyPopulation.maleNo}
-          </Text>
-        </View>
-
-        <View className="flex-row items-center space-x-1">
-          <Text className="text-black text-sm">महिला:</Text>
-          <Text className="text-black text-sm ">
-            {item.FamilyPopulation.femaleNo}
-          </Text>
-        </View>
-
-        {item.FamilyPopulation.othersNo !== 0 && (
-          <View className="flex-row items-center space-x-1">
-            <Text className="text-black text-sm">अन्य:</Text>
-            <Text className="text-black text-sm ">
-              {item.FamilyPopulation.othersNo}
-            </Text>
+            <View>
+              <Text className="text-xl text-black font-bold">
+                पारिवारिक विवरण
+                {/* {item.nameEng} */}
+              </Text>
+              <Text className="text-lg text-black font-light">
+                {item.FamilyOwner.ownerNameNp}
+                {/* {item?.nameNep} */}
+              </Text>
+            </View>
           </View>
-        )}
+
+          <View className="flex-row mt-4 space-x-5 items-center">
+            <View className="items-center justify-center">
+              <Text className="text-lg text-black font-semibold">
+                {item.id}
+              </Text>
+              <Text className="text-base text-black font-extralight">
+                क्र.स.
+              </Text>
+            </View>
+
+            <View className="items-center justify-center">
+              <Text className="text-lg text-black font-semibold">
+                {item?.House.id}
+              </Text>
+              <Text className="text-base text-black font-extralight">
+                घर नं
+              </Text>
+            </View>
+
+            {/* <View className="items-center justify-center">
+              <Text className="text-lg text-black font-semibold">
+                {item.FamilyOwner.phone}
+              </Text>
+              <Text className="text-base text-black font-extralight">
+                फोन नं
+              </Text>
+            </View> */}
+
+            <View className="items-center justify-center">
+              <Text className="text-lg text-black font-semibold">
+                {item.FamilyPopulation.memberNo}
+              </Text>
+              <Text className="text-base text-black font-extralight">
+                परिवार संख्या
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <Menu>
+            <MenuTrigger>
+              <Icon name="dots-horizontal" size={30} color="#900" />
+            </MenuTrigger>
+            <MenuOptions>
+              <MenuOption
+                // onSelect={() => uploadHouseImage(item.id)}
+                text="upload Image"
+                customStyles={{
+                  optionWrapper: {padding: 5},
+                  optionText: {color: 'black', fontSize: 16},
+                }}
+              />
+              <MenuOption
+                onSelect={() =>
+                  navigation.navigate(NavigationStrings.NEWMAP, {
+                    ids: 'housebibaran',
+                    latitude: item.latitude,
+                    longitude: item.longitude,
+                  })
+                }
+                text="View in Map"
+                customStyles={{
+                  optionWrapper: {padding: 5},
+                  optionText: {color: 'black', fontSize: 16},
+                }}
+              />
+
+              <MenuOption
+                onSelect={() =>
+                  navigation.navigate(NavigationStrings.GHRDETAIL, {
+                    id: item.id,
+                  })
+                }
+                text="View Detail"
+                customStyles={{
+                  optionWrapper: {padding: 5},
+                  optionText: {color: 'black', fontSize: 16},
+                }}
+              />
+            </MenuOptions>
+          </Menu>
+        </View>
       </View>
     </View>
+    // <View
+    //   key={index}
+    //   className="mx-5 rounded-md mt-4 py-3 bg-white"
+    //   style={{elevation: 10, padding: 10}}>
+    //   <View className="flex-row justify-between mx-6">
+    //     <Text className="text-black text-lg font-bold">
+    //       {item.FamilyOwner.ownerNameNp}
+    //       {/* {item.FamilyOwner.ownerNameNp} */}
+    //     </Text>
+    //     <TouchableOpacity
+    //       onPress={() =>
+    //         navigation.navigate(NavigationStrings.PARIBARDETAIL, {id: item.id})
+    //       }>
+    //       <Text className="text-black text-sm underline font-bold">View</Text>
+    //     </TouchableOpacity>
+    //   </View>
+    //   <View className="flex-row flex-wrap  gap-8 p-5">
+    //     <View className="flex-row items-center space-x-1">
+    //       <Text className="text-black text-sm">क्र.स.</Text>
+    //       <Text className="text-black text-sm ">
+    //         {item.id}
+    //         {/* {item.id} */}
+    //       </Text>
+    //     </View>
+
+    //     <View className="flex-row items-center space-x-1">
+    //       <Text className="text-black text-sm">घर नं:</Text>
+    //       <Text className="text-black ">{item.House.id}</Text>
+    //     </View>
+
+    //     <View className="flex-row items-center space-x-1">
+    //       <Text className="text-black text-sm">फोन नं :</Text>
+    //       <Text className="text-black text-sm">{item.FamilyOwner.phone}</Text>
+    //     </View>
+    //     <View className="flex-row items-center space-x-1">
+    //       <Text className="text-black text-sm">परिवार संख्या:</Text>
+    //       <Text className="text-black text-sm ">
+    //         {item.FamilyPopulation.memberNo}
+    //       </Text>
+    //     </View>
+    //     <View className="flex-row items-center space-x-1">
+    //       <Text className="text-black text-sm">पुरुष:</Text>
+    //       <Text className="text-black text-sm ">
+    //         {item.FamilyPopulation.maleNo}
+    //       </Text>
+    //     </View>
+
+    //     <View className="flex-row items-center space-x-1">
+    //       <Text className="text-black text-sm">महिला:</Text>
+    //       <Text className="text-black text-sm ">
+    //         {item.FamilyPopulation.femaleNo}
+    //       </Text>
+    //     </View>
+
+    //     {item.FamilyPopulation.othersNo !== 0 && (
+    //       <View className="flex-row items-center space-x-1">
+    //         <Text className="text-black text-sm">अन्य:</Text>
+    //         <Text className="text-black text-sm ">
+    //           {item.FamilyPopulation.othersNo}
+    //         </Text>
+    //       </View>
+    //     )}
+    //   </View>
+    // </View>
   ));
 
   if (isLoading) {

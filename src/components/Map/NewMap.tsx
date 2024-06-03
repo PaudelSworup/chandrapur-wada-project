@@ -142,6 +142,8 @@ const NewMap = () => {
   const start = roadCoordinates?.find((point: any) => point.type === 'start');
   const end = roadCoordinates?.find((point: any) => point.type === 'end');
 
+  console.log(start, end);
+
   const initialRegion = {
     latitude: coordinates ? coordinates?.coords?.latitude : 0,
     longitude: coordinates ? coordinates?.coords?.longitude : 0,

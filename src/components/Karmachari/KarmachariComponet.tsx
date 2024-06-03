@@ -4,12 +4,12 @@ import React from 'react';
 const KarmachariComponet = () => {
   return (
     <SafeAreaView className="bg-[#f1eded] h-full">
+      <View className={`flex-row m-5 justify-between`}>
+        <Text className="text-black text-2xl">कर्मचरिहरु</Text>
+      </View>
+
       <ScrollView>
         <View className="mx-2">
-          <View>
-            <Text className="text-2xl text-black">कर्मचरिहरु </Text>
-          </View>
-
           <View className="justify-center items-center mt-5">
             <View className=" rounded-lg " style={{elevation: 4}}>
               <Image

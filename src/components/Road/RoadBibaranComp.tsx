@@ -80,116 +80,140 @@ const RoadBibaranComp = () => {
 
   const renderItemTwo = useCallback(
     ({item, index}: any) => (
-      <TouchableOpacity
-        key={index}
-        onPress={() =>
-          navigation.navigate(NavigationStrings.ROADDETAIL, {id: item.id})
-        }>
-        <View
-          className="mx-4 px-3 py-2 mt-4 rounded-2xl bg-white "
-          style={{elevation: 10}}>
-          <View className="flex-row justify-between">
-            <View>
-              <View className="flex-row  gap-3 items-center">
-                <Image
-                  source={{
-                    uri: 'https://img.freepik.com/free-photo/minimalist-photorealistic-road_23-2150953081.jpg',
-                  }}
-                  alt=""
-                  className="w-14 h-14 rounded-full"
-                />
+      // <TouchableOpacity
+      //   key={index}
+      //   onPress={() =>
+      //     navigation.navigate(NavigationStrings.ROADDETAIL, {id: item.id})
+      //   }>
+      <View
+        className="mx-4 px-3 py-2 mt-4 rounded-2xl bg-white "
+        style={{elevation: 10}}>
+        <View className="flex-row justify-between">
+          <View>
+            <View className="flex-row  gap-3 items-center">
+              <Image
+                source={{
+                  uri: 'https://img.freepik.com/free-photo/minimalist-photorealistic-road_23-2150953081.jpg',
+                }}
+                alt=""
+                className="w-14 h-14 rounded-full"
+              />
 
-                <View>
-                  <Text className="text-xl text-black font-bold">
-                    {item.nameEng}
-                  </Text>
-                  <Text className="text-lg text-black font-light">
-                    {item?.nameNep}
-                  </Text>
-                </View>
-              </View>
-
-              <View className="flex-row mt-4 space-x-2">
-                <View>
-                  <Text className="text-lg text-black font-semibold">
-                    {item?.startLandmark}
-                  </Text>
-                  <Text className="text-base text-black font-extralight">
-                    सुरु स्थलचिन्ह
-                  </Text>
-                </View>
-
-                <View>
-                  <Text className="text-lg text-black font-semibold">
-                    {item?.currentPurposeWidth}
-                  </Text>
-                  <Text className="text-base text-black font-extralight">
-                    हालको उद्देश्य चौडाइ
-                  </Text>
-                </View>
-
-                <View>
-                  <Text className="text-lg text-black font-semibold">
-                    {item?.futurePurposeWidth}
-                  </Text>
-                  <Text className="text-base text-black font-extralight">
-                    सुरु स्थलचिन्ह
-                  </Text>
-                </View>
+              <View>
+                <Text className="text-xl text-black font-bold">
+                  {item.nameEng}
+                </Text>
+                <Text className="text-lg text-black font-light">
+                  {item?.nameNep}
+                </Text>
               </View>
             </View>
 
-            <View>
-              <Menu>
-                <MenuTrigger>
-                  <Icon name="dots-horizontal" size={30} color="#900" />
-                </MenuTrigger>
-                {/* <MenuTrigger text="..." style={{backgroundColor: 'black'}} /> */}
-                <MenuOptions>
-                  <MenuOption
-                    onSelect={() =>
-                      navigation.navigate(NavigationStrings.MAPS, {
-                        stringID: 'roadUpdate',
-                        roadbibaranid: item?.id,
-                      })
-                    }
-                    text="Add Track"
-                    customStyles={{
-                      optionWrapper: {padding: 5},
-                      optionText: {color: 'black', fontSize: 16},
-                    }}
-                  />
-                  <MenuOption
-                    onSelect={() =>
-                      navigation.navigate(NavigationStrings.BRIDGE, {
-                        id: item.id,
-                      })
-                    }
-                    text="Add bridge"
-                    customStyles={{
-                      optionWrapper: {padding: 5},
-                      optionText: {color: 'black', fontSize: 16},
-                    }}
-                  />
-                  <MenuOption
-                    onSelect={() =>
-                      navigation.navigate(NavigationStrings.NEWMAP, {
-                        stringID: 'polygon',
-                        polygonID: item?.id,
-                      })
-                    }
-                    text="View Road"
-                    customStyles={{
-                      optionWrapper: {padding: 5},
-                      optionText: {color: 'black', fontSize: 16},
-                    }}
-                  />
-                </MenuOptions>
-              </Menu>
+            <View className="flex-row mt-4 space-x-2">
+              <View>
+                <Text className="text-lg text-black font-semibold">
+                  {item?.startLandmark}
+                </Text>
+                <Text className="text-base text-black font-extralight">
+                  सुरु स्थलचिन्ह
+                </Text>
+              </View>
+
+              <View>
+                <Text className="text-lg text-black font-semibold">
+                  {item?.currentPurposeWidth}
+                </Text>
+                <Text className="text-base text-black font-extralight">
+                  हालको उद्देश्य चौडाइ
+                </Text>
+              </View>
+
+              <View>
+                <Text className="text-lg text-black font-semibold">
+                  {item?.futurePurposeWidth}
+                </Text>
+                <Text className="text-base text-black font-extralight">
+                  अन्त्य स्थलचिन्ह
+                </Text>
+              </View>
             </View>
           </View>
+
+          <View>
+            <Menu>
+              <MenuTrigger>
+                <Icon name="dots-horizontal" size={30} color="#900" />
+              </MenuTrigger>
+              {/* <MenuTrigger text="..." style={{backgroundColor: 'black'}} /> */}
+              <MenuOptions>
+                <MenuOption
+                  onSelect={() =>
+                    navigation.navigate(NavigationStrings.MAPS, {
+                      stringID: 'roadUpdate',
+                      roadbibaranid: item?.id,
+                    })
+                  }
+                  text="Add Track"
+                  customStyles={{
+                    optionWrapper: {padding: 5},
+                    optionText: {color: 'black', fontSize: 16},
+                  }}
+                />
+                <MenuOption
+                  onSelect={() =>
+                    navigation.navigate(NavigationStrings.ENDPOINT, {
+                      id: item?.id,
+                    })
+                  }
+                  text="Add End Point"
+                  customStyles={{
+                    optionWrapper: {padding: 5},
+                    optionText: {color: 'black', fontSize: 16},
+                  }}
+                />
+                <MenuOption
+                  onSelect={() =>
+                    navigation.navigate(NavigationStrings.BRIDGE, {
+                      id: item.id,
+                    })
+                  }
+                  text="Add bridge"
+                  customStyles={{
+                    optionWrapper: {padding: 5},
+                    optionText: {color: 'black', fontSize: 16},
+                  }}
+                />
+                <MenuOption
+                  onSelect={() =>
+                    navigation.navigate(NavigationStrings.NEWMAP, {
+                      stringID: 'polygon',
+                      polygonID: item?.id,
+                    })
+                  }
+                  text="View in Map"
+                  customStyles={{
+                    optionWrapper: {padding: 5},
+                    optionText: {color: 'black', fontSize: 16},
+                  }}
+                />
+                <MenuOption
+                  onSelect={() =>
+                    navigation.navigate(NavigationStrings.ROADDETAIL, {
+                      id: item.id,
+                    })
+                  }
+                  text="View Detail"
+                  customStyles={{
+                    optionWrapper: {padding: 5},
+                    optionText: {color: 'black', fontSize: 16},
+                  }}
+                />
+              </MenuOptions>
+            </Menu>
+          </View>
         </View>
-      </TouchableOpacity>
+      </View>
+      // </TouchableOpacity>
     ),
     [],
   );

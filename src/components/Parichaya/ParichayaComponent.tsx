@@ -48,8 +48,8 @@ const ParichayaComponent = () => {
 
   return (
     <SafeAreaView>
-      <ScrollView className="h-screen bg-slate-200">
-        <View className="bg-[#fffdfd] h-screen  mt-40 px-5 py-2  rounded-tl-[45px] rounded-tr-[45px]">
+      <ScrollView className="h-full bg-slate-200">
+        <View className="bg-[#fffdfd] h-full  mt-40 px-5 py-2  rounded-tl-[45px] rounded-tr-[45px]">
           <View
             className="mt-[-100px] h-[340px] rounded-2xl"
             style={{

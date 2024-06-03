@@ -14,7 +14,7 @@ import {
 } from 'react-native-paper';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import {useQuery} from 'react-query';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {TrashIcon} from 'react-native-heroicons/outline';
 import {useDispatch} from 'react-redux';
 import {AppDispatch, persistor} from '../../store/store';
@@ -29,8 +29,14 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {requestLoacationPermission} from '../../APIS/AppApi/api';
 import NavigationStrings from '../../Constant/NavigationStrings';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {getTrackDetail, postTrack, updateTrackData} from '../../APIS/API/api';
+import {
+  deleteTrackData,
+  getTrackDetail,
+  postTrack,
+  updateTrackData,
+} from '../../APIS/API/api';
 import {Polyline} from 'react-native-maps';
+import {FlatList} from 'react-native';
 
 type RootStackParamList = {
   uniqueKey: {id?: string};
@@ -108,6 +114,8 @@ const MapsComponent = () => {
   const windowHeight = useWindowDimensions().height;
   const [backPressedOnce, setBackPressedOnce] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [trackData, setTrackData] = useState([]);
+  const queryClient = useQueryClient();
 
   const locationService = useQuery(
     ['locationservice'],
@@ -131,6 +139,14 @@ const MapsComponent = () => {
     );
   };
 
+  const getTrack = useQuery(
+    ['trackDet', roadbibaranid],
+    async () => getTrackDetail(roadbibaranid),
+    {
+      onSettled: data => setTrackData(data?.track),
+    },
+  );
+
   const initialRegion = {
     latitude: coordinates ? coordinates?.coords?.latitude : 0,
     longitude: coordinates ? coordinates?.coords?.longitude : 0,
@@ -138,19 +154,35 @@ const MapsComponent = () => {
     longitudeDelta: 0.001,
   };
 
-  // const initialRegion2 = {
-  //   latitude: newLat,
-  //   longitude: newLong,
-  //   latitudeDelta: 0.01,
-  //   longitudeDelta: 0.01,
-  // };
+  const deleteMutation = useMutation<any, any, any>({
+    mutationFn: deleteTrackData,
+    onSuccess: data => {
+      if (data?.success === true) {
+        queryClient.invalidateQueries(['trackDet', roadbibaranid]);
+        toast.show(data?.message, {type: 'success', placement: 'bottom'});
+      } else {
+        toast.show(data?.error || 'Error occurred', {
+          type: 'danger',
+          placement: 'bottom',
+        });
+      }
+    },
+  });
 
-  // const initialRegion3 = {
-  //   latitude: roadLat,
-  //   longitude: roadLong,
-  //   latitudeDelta: 0.01,
-  //   longitudeDelta: 0.01,
-  // };
+  const mutation = useMutation<any, any, any>({
+    mutationFn: postTrack,
+    onSuccess: data => {
+      if (data?.success === true) {
+        queryClient.invalidateQueries(['trackDet', roadbibaranid]);
+        toast.show(data?.message, {type: 'success', placement: 'bottom'});
+      } else {
+        toast.show(data?.error || 'Error occurred', {
+          type: 'danger',
+          placement: 'bottom',
+        });
+      }
+    },
+  });
 
   const currentPosition = useQuery(
     ['coordinates'],
@@ -199,29 +231,50 @@ const MapsComponent = () => {
     }
 
     if (stringID === 'roadUpdate') {
-      updateTrackData(
-        {
-          latitude: newCoordinates
-            ? newCoordinates?.latitude
-            : coordinates?.coords?.latitude,
-          longitude: newCoordinates
-            ? newCoordinates?.longitude
-            : coordinates?.coords?.longitude,
+      const trackCoordinates = {
+        latitude: newCoordinates
+          ? newCoordinates?.latitude
+          : coordinates?.coords?.latitude,
+        longitude: newCoordinates
+          ? newCoordinates?.longitude
+          : coordinates?.coords?.longitude,
+        type: 'track',
+        roadId: roadbibaranid,
+      };
+      mutation.mutate(trackCoordinates, {
+        onSuccess: () => {
+          dispatch(
+            setFirstCoordinate({
+              lattitude: 0,
+              longitude: 0,
+              coordinateType: 'one',
+            }),
+          );
         },
-        roadbibaranid,
-      ).then((res: any) => {
-        if (res?.success === true) {
-          toast.show(`${res?.message}`, {
-            type: 'success',
-            placement: 'bottom',
-          });
-        } else {
-          toast.show(`${res?.error}`, {
-            type: 'danger',
-            placement: 'bottom',
-          });
-        }
       });
+      // updateTrackData(
+      //   {
+      //     latitude: newCoordinates
+      //       ? newCoordinates?.latitude
+      //       : coordinates?.coords?.latitude,
+      //     longitude: newCoordinates
+      //       ? newCoordinates?.longitude
+      //       : coordinates?.coords?.longitude,
+      //   },
+      //   roadbibaranid,
+      // ).then((res: any) => {
+      //   if (res?.success === true) {
+      //     toast.show(`${res?.message}`, {
+      //       type: 'success',
+      //       placement: 'bottom',
+      //     });
+      //   } else {
+      //     toast.show(`${res?.error}`, {
+      //       type: 'danger',
+      //       placement: 'bottom',
+      //     });
+      //   }
+      // });
       // navigation.navigate(NavigationStrings.ROADBIBARAN);
     }
   };
@@ -272,6 +325,67 @@ const MapsComponent = () => {
     }, [handleBackPress]),
   );
 
+  const renderItemTwo = useCallback(
+    ({item, index}: any) => (
+      <View className="mt-3 mx-3 py-4 shadow-lg border p-3 rounded-md">
+        <View className="flex-row justify-between p-3">
+          <View>
+            <View className="flex-row space-x-3 ">
+              <Text
+                className={`text-stone-900 ${
+                  windowWidth > 500 ? 'text-lg' : 'text-base'
+                }`}>
+                id
+              </Text>
+              <Text
+                className={`text-stone-900 ${
+                  windowWidth > 500 ? 'text-lg' : 'text-base'
+                }`}>
+                {item.id}
+              </Text>
+            </View>
+
+            <View className="flex-row space-x-3 ">
+              <Text
+                className={`text-stone-900 ${
+                  windowWidth > 500 ? 'text-lg' : 'text-base'
+                }`}>
+                lat
+              </Text>
+              <Text
+                className={`text-stone-900 ${
+                  windowWidth > 500 ? 'text-lg' : 'text-base'
+                }`}>
+                {item.latitude}
+              </Text>
+            </View>
+
+            <View className="flex-row space-x-3 ">
+              <Text
+                className={`text-stone-900 ${
+                  windowWidth > 500 ? 'text-lg' : 'text-base'
+                }`}>
+                Long
+              </Text>
+              <Text
+                className={`text-stone-900 ${
+                  windowWidth > 500 ? 'text-lg' : 'text-base'
+                }`}>
+                {item.longitude}
+              </Text>
+            </View>
+          </View>
+          <TrashIcon
+            size={40}
+            color="red"
+            onPress={() => deleteMutation.mutate(item.id)}
+          />
+        </View>
+      </View>
+    ),
+    [],
+  );
+
   return (
     <>
       {coordinates ? (
@@ -291,94 +405,81 @@ const MapsComponent = () => {
               setMarker(e.nativeEvent.coordinate);
               setNewCoordinates(e.nativeEvent.coordinate);
               console.log(e.nativeEvent.coordinate);
-             
             }}
             showsCompass>
             {marker != null ? (
               <Marker draggable coordinate={marker} />
             ) : (
-              <Marker
-                draggable
-                coordinate={initialRegion}
-              />
+              <Marker draggable coordinate={initialRegion} />
             )}
           </MapView>
-          <ScrollView>
-            <View className="p-3">
-              <View className="mx-3">
+
+          <View className="p-3">
+            <View className="flex-row justify-between">
+              <Button
+                onPress={changeRegion}
+                className={`bg-red-600/80 rounded-md ${
+                  windowWidth > 500 ? 'px-6 py-2' : 'px-4'
+                }`}>
+                <Text className="text-[16px] text-white">Reset</Text>
+              </Button>
+
+              <Button
+                onPress={saveRegion}
+                className="text-[16px] bg-cyan-600/80 rounded-md px-4">
+                <Text className="text-white">Save</Text>
+              </Button>
+            </View>
+            {trackData.length === 0 && (
+              <View className="mt-3 shadow-lg border p-3 rounded-md">
                 <View className="flex-row justify-between">
-                  <Button
-                    onPress={changeRegion}
-                    className={`bg-red-600/80 rounded-md ${
-                      windowWidth > 500 ? 'px-6 py-2' : 'px-4'
-                    }`}>
-                    <Text className="text-[16px] text-white">Reset</Text>
-                  </Button>
+                  <View className="flex-row space-x-3 ">
+                    <Text
+                      className={`text-stone-900 ${
+                        windowWidth > 500 ? 'text-lg' : 'text-base'
+                      }`}>
+                      Lat
+                    </Text>
+                    <Text
+                      className={`text-stone-900 ${
+                        windowWidth > 500 ? 'text-lg' : 'text-base'
+                      }`}>
+                      {newCoordinates
+                        ? newCoordinates.latitude
+                        : coordinates?.coords?.latitude}
+                    </Text>
+                  </View>
 
-                  <Button
-                    onPress={saveRegion}
-                    className="text-[16px] bg-cyan-600/80 rounded-md px-4">
-                    <Text className="text-white">Save</Text>
-                  </Button>
-                </View>
-                <View className="mt-3 shadow-lg border p-3 rounded-md">
-                  <View className="flex-row justify-between items-center">
-                    <View>
-                      <View className="flex-row items-center space-x-3 ">
-                        <Text
-                          className={`text-stone-900 ${
-                            windowWidth > 500 ? 'text-lg' : 'text-base'
-                          }`}>
-                          id:
-                        </Text>
-                        <Text
-                          className={`text-stone-900 ${
-                            windowWidth > 500 ? 'text-lg' : 'text-base'
-                          }`}>
-                          1
-                        </Text>
-                      </View>
-
-                      <View className="flex-row space-x-3 ">
-                        <Text
-                          className={`text-stone-900 ${
-                            windowWidth > 500 ? 'text-lg' : 'text-base'
-                          }`}>
-                          Lat
-                        </Text>
-                        <Text
-                          className={`text-stone-900 ${
-                            windowWidth > 500 ? 'text-lg' : 'text-base'
-                          }`}>
-                          {newCoordinates
-                            ? newCoordinates.latitude
-                            : coordinates?.coords?.latitude}
-                        </Text>
-                      </View>
-
-                      <View className="flex-row space-x-3 ">
-                        <Text
-                          className={`text-stone-900 ${
-                            windowWidth > 500 ? 'text-lg' : 'text-base'
-                          }`}>
-                          Long
-                        </Text>
-                        <Text
-                          className={`text-stone-900 ${
-                            windowWidth > 500 ? 'text-lg' : 'text-base'
-                          }`}>
-                          {newCoordinates
-                            ? newCoordinates.longitude
-                            : coordinates?.coords?.longitude}
-                        </Text>
-                      </View>
-                    </View>
-                    <TrashIcon size={40} color="red" />
+                  <View className="flex-row space-x-3 ">
+                    <Text
+                      className={`text-stone-900 ${
+                        windowWidth > 500 ? 'text-lg' : 'text-base'
+                      }`}>
+                      Long
+                    </Text>
+                    <Text
+                      className={`text-stone-900 ${
+                        windowWidth > 500 ? 'text-lg' : 'text-base'
+                      }`}>
+                      {newCoordinates
+                        ? newCoordinates.longitude
+                        : coordinates?.coords?.longitude}
+                    </Text>
                   </View>
                 </View>
               </View>
-            </View>
-          </ScrollView>
+            )}
+          </View>
+
+          <FlatList
+            removeClippedSubviews={true}
+            initialNumToRender={6}
+            maxToRenderPerBatch={10}
+            data={trackData}
+            renderItem={renderItemTwo}
+            keyExtractor={item => Math.random().toString(36).substring(2)}
+          />
+
           <View className="flex-1 justify-between">
             <Snackbar
               className="bg-[#cbc9c9]"

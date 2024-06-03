@@ -4,19 +4,25 @@ import {
   SafeAreaView,
   FlatList,
   Platform,
-  Alert,
+  Image,
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
-import {ScrollView} from 'react-native';
 import {ActivityIndicator, Button} from 'react-native-paper';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import NavigationStrings from '../../Constant/NavigationStrings';
 import {getHouseData, uplaodImage} from '../../APIS/API/api';
-import {useQuery, useQueryClient} from 'react-query';
+import {useQuery} from 'react-query';
 import {TouchableOpacity} from 'react-native';
 import {pickImage} from '../../utils/docPicker';
 import {useToast} from 'react-native-toast-notifications';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const GharbibaranComponent = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -52,8 +58,6 @@ const GharbibaranComponent = () => {
       },
     },
   );
-
-  console.log(houseData);
 
   const fetchNextPage = async () => {
     setCurrentPage(prevPage => prevPage + 1);
@@ -120,6 +124,129 @@ const GharbibaranComponent = () => {
       });
     });
   };
+
+  const renderItemTwo = useCallback(
+    ({item, index}: any) => (
+      // <TouchableHighlight
+      //   key={index}
+      //   onPress={() =>
+      //     navigation.navigate(NavigationStrings.GHRDETAIL, {id: item.id})
+      //   }>
+      <View
+        className="mx-4 px-3 py-2 mt-4 rounded-2xl bg-white"
+        style={{elevation: 10}}>
+        <View className="flex-row justify-between">
+          <View>
+            <View className="flex-row  gap-3 items-center">
+              <Image
+                source={{
+                  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRdcZKR5-NyiNql2yCnWIQfZLje36aP00a4g&s',
+                }}
+                alt=""
+                className="w-14 h-14 rounded-full"
+              />
+
+              <View>
+                <Text className="text-xl text-black font-bold">
+                  घरको विवरण
+                  {/* {item.nameEng} */}
+                </Text>
+                <Text className="text-lg text-black font-light">
+                  {item?.ownerNameNp}
+                  {/* {item?.nameNep} */}
+                </Text>
+              </View>
+            </View>
+
+            <View className="flex-row  mt-4 space-x-2">
+              <View className="items-center justify-center">
+                <Text className="text-lg text-black font-semibold">
+                  {item?.id}
+                </Text>
+                <Text className="text-base text-black font-extralight">
+                  घर न
+                </Text>
+              </View>
+
+              <View className="items-center justify-center">
+                <Text className="text-lg text-black font-semibold">
+                  {item?.floor}
+                </Text>
+                <Text className="text-base text-black font-extralight">
+                  तल्ला
+                </Text>
+              </View>
+
+              <View className="items-center justify-center">
+                <Text className="text-lg text-black font-semibold">
+                  {parseFloat(item?.frontLength)}
+                </Text>
+                <Text className="text-base text-black font-extralight">
+                  अगाडि लाम्बाई
+                </Text>
+              </View>
+
+              <View className="items-center justify-center">
+                <Text className="text-lg text-black font-semibold">
+                  {parseFloat(item?.backWidth)}
+                </Text>
+                <Text className="text-base text-black font-extralight">
+                  पछाडि चौडाई
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View>
+            <Menu>
+              <MenuTrigger>
+                <Icon name="dots-horizontal" size={30} color="#900" />
+              </MenuTrigger>
+              <MenuOptions>
+                <MenuOption
+                  onSelect={() => uploadHouseImage(item.id)}
+                  text="upload Image"
+                  customStyles={{
+                    optionWrapper: {padding: 5},
+                    optionText: {color: 'black', fontSize: 16},
+                  }}
+                />
+                <MenuOption
+                  onSelect={() =>
+                    navigation.navigate(NavigationStrings.NEWMAP, {
+                      ids: 'housebibaran',
+                      latitude: item.latitude,
+                      longitude: item.longitude,
+                    })
+                  }
+                  text="View in Map"
+                  customStyles={{
+                    optionWrapper: {padding: 5},
+                    optionText: {color: 'black', fontSize: 16},
+                  }}
+                />
+
+                <MenuOption
+                  onSelect={() =>
+                    navigation.navigate(NavigationStrings.GHRDETAIL, {
+                      id: item.id,
+                    })
+                  }
+                  text="View Detail"
+                  customStyles={{
+                    optionWrapper: {padding: 5},
+                    optionText: {color: 'black', fontSize: 16},
+                  }}
+                />
+              </MenuOptions>
+            </Menu>
+          </View>
+        </View>
+      </View>
+      // </TouchableHighlight>
+    ),
+    [],
+  );
 
   const renderItem = useCallback(
     ({item, index}: any) => (
@@ -221,7 +348,7 @@ const GharbibaranComponent = () => {
   }
 
   return (
-    <SafeAreaView className="h-full bg-[#f1eded]">
+    <SafeAreaView className="h-full  bg-[#f1eded]">
       {uploading && (
         <View
           style={{
@@ -257,7 +384,7 @@ const GharbibaranComponent = () => {
         initialNumToRender={6}
         maxToRenderPerBatch={10}
         data={houseData}
-        renderItem={renderItem}
+        renderItem={renderItemTwo}
         ListFooterComponent={() =>
           loading ? (
             <ActivityIndicator className="mt-3" size="large" color="blue" />
@@ -267,7 +394,7 @@ const GharbibaranComponent = () => {
       />
 
       {/* </ScrollView> */}
-      <View className="flex-row justify-between p-2">
+      <View className="flex-row  justify-between p-2">
         <Button
           onPress={fetchPrevPage}
           className="bg-cyan-900 rounded-full"

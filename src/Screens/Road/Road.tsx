@@ -2,7 +2,6 @@ import {ScrollView, Text, View} from 'react-native';
 import React from 'react';
 import {Formik} from 'formik';
 
-import {Button} from 'react-native-paper';
 import {useAppSelector} from '../../store/store';
 import RoadInfo from '../../components/Road/RoadComponent';
 import {
@@ -27,12 +26,12 @@ const Road = () => {
     onSuccess: data => {
       if (data?.success === true) {
         toast.show(data?.message, {type: 'success', placement: 'bottom'});
-        postTrack({
-          latitude: lattitude,
-          longitude: longitude,
-          type: 'track',
-          roadId: data?.optional.id,
-        });
+        // postTrack({
+        //   latitude: lattitude,
+        //   longitude: longitude,
+        //   type: 'track',
+        //   roadId: data?.optional.id,
+        // });
       } else {
         toast.show(data?.error || 'Error occurred', {
           type: 'danger',

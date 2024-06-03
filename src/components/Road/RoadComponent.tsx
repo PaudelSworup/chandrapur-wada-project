@@ -97,6 +97,10 @@ const RoadInfo: React.FC<{
 
   return (
     <View className={`${width > 700 && 'px-56'} bg-white `}>
+      <Text className="text-lg text-black mb-4">
+        बाटो सम्बन्धी विवरण भर्नुहोस{' '}
+      </Text>
+
       <View className="mb-4">
         <TextInput
           mode="outlined"

@@ -93,7 +93,9 @@ const FirstRegistrationView = ({handleChange, values, errors}: any) => {
 
   return (
     <>
-      <Text className="text-lg text-black">घर सम्बन्धी विवरण भर्नुहोस </Text>
+      <Text className="text-lg text-black mb-4">
+        घर सम्बन्धी विवरण भर्नुहोस
+      </Text>
       <View className="mb-4">
         <TextInput
           mode="outlined"

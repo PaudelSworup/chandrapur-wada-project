@@ -96,13 +96,17 @@ const GharBibaranDetailComp = () => {
 
           <View style={styles.row}>
             <Text style={styles.text}>अगाडि लाम्बाई</Text>
-            <Text style={styles.text}>{data?.houses.frontLength}</Text>
+            <Text style={styles.text}>
+              {parseFloat(data?.houses.frontLength)}
+            </Text>
           </View>
           <Divider style={styles.divider} />
 
           <View style={styles.row}>
             <Text style={styles.text}>पछाडि चौडाई</Text>
-            <Text style={styles.text}>{data?.houses.backWidth}</Text>
+            <Text style={styles.text}>
+              {parseFloat(data?.houses.backWidth)}
+            </Text>
           </View>
           <Divider style={styles.divider} />
 
@@ -128,7 +132,14 @@ const GharBibaranDetailComp = () => {
 
           {data?.houses.remarks != '' && (
             <>
-              <View style={styles.row}>
+              <View
+                className="flex-row justify-between flex-wrap space-x-1"
+                style={{
+                  elevation: 5,
+                  padding: 15,
+                  backgroundColor: 'white',
+                  marginTop: 10,
+                }}>
                 <Text style={styles.text}>टिप्पणी:</Text>
                 <Text className="text-base text-black">
                   {data?.houses.remarks}

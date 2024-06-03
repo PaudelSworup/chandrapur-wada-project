@@ -501,6 +501,22 @@ export const updateTrackData = async (data: any, id: number) => {
   }
 };
 
+export const deleteTrackData = async (id: number) => {
+  try {
+    return await fetch(`${API}/track/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(res => {
+      return res.json();
+    });
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
 export const addBridgeData = async (data: any) => {
   try {
     return await fetch(`${API}/bridge/add`, {
